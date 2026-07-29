@@ -80,6 +80,50 @@ This is a physically constrained geometry fixture, not a new Maxwell
 solution or new knot discovery. See
 [`MAXWELL_KNOT_FIELD_PROGRAM.md`](MAXWELL_KNOT_FIELD_PROGRAM.md).
 
+The fourth experiment treats a closed curve as a tower of Fourier modes and
+applies a curvature-inspired parameter-space heat flow
+
+```text
+partial_tau gamma = partial_s^2 gamma.
+```
+
+Mode `k` decays as `exp(-tau k^2)`, so fine, high-curvature blocks disappear
+first. The CUDA run follows projection crossings, nonlocal clearance, bending
+energy, and effective mode count for four Bateman core fixtures. It also
+records the elementary exact result that the centered, rescaled flow converges
+to the first surviving harmonic. When that harmonic is a rank-two first mode,
+a nontrivial knot must encounter the non-embedding discriminant at finite RG
+time. A higher first mode instead gives a nonembedded multiple-cover limit;
+that convergence alone does not imply finite-time contact. This is an abstract
+RG/coarse-graining model, not a mechanical string simulation or a new knot
+theorem. See the generated
+[`CURVATURE_RG_KNOT_COLLAPSE_REPORT.md`](results/curvature_rg_knot_collapse/CURVATURE_RG_KNOT_COLLAPSE_REPORT.md).
+
+A second CUDA pass resolves that flow into declared wavelength bands:
+macroscopic modes `1-2`, mesoscopic modes `3-8`, and microscopic modes `9+`.
+It distinguishes absolute energy depletion from relative structural share.
+The resulting cascade shows why microscopic roughness can disappear long
+before the knot diagram changes, and why very small higher modes can remain
+topologically decisive near a multiply covered limiting curve. See
+[`CURVATURE_RG_MULTISCALE_JENGA_REPORT.md`](results/curvature_rg_knot_collapse/CURVATURE_RG_MULTISCALE_JENGA_REPORT.md).
+
+A third coarse-graining pass replaces the single Jenga tower with a finite
+product-Fibonacci environment. Golden-ratio interval tilings on three axes are
+affinely sheared, and every resulting box is subdivided face-to-face into six
+convex tetrahedra. The metric RG time `tau` smooths the knot, while an
+independent inflation level coarsens the environment. A retained itinerary
+ledger records occupied cells, cell transitions and entropy, curvature
+concentration, projected winding about cell centers, and tangent holonomy. A
+fourth, mechanics-aware channel records the exact Coulton-Galperin
+constant-curvature force response as a normalized local-chart susceptibility.
+This separates geometric simplification from loss of combinatorial history
+and from scale-dependent response.
+The construction is a reproducible quasiperiodic prototype, not a claim to be
+the Ammann-Kramer-Neri tiling. Its Galperin-inspired defect calculations are
+local cell diagnostics; the ambient knot does not yet satisfy the hypotheses
+of Galperin's surface-geodesic identities. See
+[`QUASIPERIODIC_POLYHEDRAL_RG_REPORT.md`](results/quasiperiodic_polyhedral_rg/QUASIPERIODIC_POLYHEDRAL_RG_REPORT.md).
+
 ## The Missing Lemma
 
 For a link diagram, smoothing choices form a Boolean cube. The
@@ -111,6 +155,9 @@ python -m pip install -e ".[test,experiments]"
 python scripts/check_four_color_penrose_fixtures.py
 python scripts/check_cubic_edge_smoothing_lifts.py
 python scripts/check_maxwell_knot_fields_gpu.py
+python scripts/check_curvature_rg_knot_collapse_gpu.py
+python scripts/check_curvature_rg_multiscale_gpu.py
+python scripts/check_quasiperiodic_polyhedral_rg_gpu.py
 python -m pytest tests -q
 ```
 
@@ -120,6 +167,8 @@ Generated artifacts are written to:
 results/four_color_penrose_program/
 results/cubic_edge_smoothing/
 results/maxwell_knot_fields/
+results/curvature_rg_knot_collapse/
+results/quasiperiodic_polyhedral_rg/
 ```
 
 ## Repository Layout
@@ -158,6 +207,27 @@ tests/test_maxwell_knot_fields.py
 tests/test_goemans_conflict_fixture.py
     Exact 58-versus-60 arithmetic and feasibility tests.
 
+src/curvature_rg_flow.py
+    Fourier heat coarse-graining and scale-free geometric diagnostics.
+
+scripts/check_curvature_rg_knot_collapse_gpu.py
+    CUDA RG-flow runner, crossing diagnostics, plots, and report generator.
+
+scripts/check_curvature_rg_multiscale_gpu.py
+    CUDA macro/meso/micro spectral ledger and cascade visualization.
+
+tests/test_curvature_rg_flow.py
+    Semigroup, spectral partition, monotonicity, and terminal-harmonic tests.
+
+src/quasiperiodic_polyhedral_rg.py
+    Product-Fibonacci tetrahedral hierarchy and retained itinerary invariants.
+
+scripts/check_quasiperiodic_polyhedral_rg_gpu.py
+    CUDA metric/environment RG runner, visualizations, and report generator.
+
+tests/test_quasiperiodic_polyhedral_rg.py
+    Axis, tetrahedral defect, inflation, turning, holonomy, and winding tests.
+
 FOUR_COLOR_KNOT_PROOF_PROGRAM.md
     Mathematical proof-search program and claim boundaries.
 
@@ -172,6 +242,12 @@ results/cubic_edge_smoothing/
 
 results/maxwell_knot_fields/
     CUDA diagnostics, CSVs, audit JSON, report, and 3D figures.
+
+results/curvature_rg_knot_collapse/
+    CUDA flow and scale traces, summaries, audits, reports, and 3D snapshots.
+
+results/quasiperiodic_polyhedral_rg/
+    CUDA hierarchy ledger, defect library, audit, report, and schematics.
 ```
 
 ## Evidence Policy
@@ -187,6 +263,15 @@ results/maxwell_knot_fields/
   solutions or new knot types.
 - Four-coloring a diagnostic conflict graph does not certify weighted
   whole-trajectory selection.
+- Projected winding around an ambient cell center is not identified with
+  Galperin's vertex index unless the curve has first been placed on an
+  appropriate polyhedral surface.
+- A bounded integer-relation search among tetrahedral angle defects is a
+  finite diagnostic, not a proof of rational independence.
+- The space-form force susceptibility is a declared local-chart response; it
+  is not a physical force produced by the ambient Euclidean tiling.
+- Heat-flow crossing changes are one-sided diagnostics, not complete knot
+  classifications or topology-preserving simplifications.
 
 ## Primary Sources
 
