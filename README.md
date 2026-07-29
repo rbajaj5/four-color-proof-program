@@ -65,6 +65,21 @@ implies colorable parent." The exact replacement-edge criterion is recorded:
 a child coloring lifts precisely when its two replacement edges are assigned
 different colors.
 
+The third experiment uses exact Bateman potentials to sample electromagnetic
+torus-knot core lines on CUDA. It:
+
+- verifies free-space Maxwell and null-field residuals;
+- checks field/tangent alignment for known Hopf, trefoil, cinquefoil, and
+  `T(3,4)` fixtures;
+- records a finite catalog of projection degeneracies;
+- renders the full 3D magnetic core sets; and
+- verifies an exact `58` versus `60` conflict-core example showing why planar
+  four-colorability does not make fractional whole-route selection integral.
+
+This is a physically constrained geometry fixture, not a new Maxwell
+solution or new knot discovery. See
+[`MAXWELL_KNOT_FIELD_PROGRAM.md`](MAXWELL_KNOT_FIELD_PROGRAM.md).
+
 ## The Missing Lemma
 
 For a link diagram, smoothing choices form a Boolean cube. The
@@ -95,6 +110,7 @@ Python 3.11 or newer is recommended.
 python -m pip install -e ".[test,experiments]"
 python scripts/check_four_color_penrose_fixtures.py
 python scripts/check_cubic_edge_smoothing_lifts.py
+python scripts/check_maxwell_knot_fields_gpu.py
 python -m pytest tests -q
 ```
 
@@ -103,6 +119,7 @@ Generated artifacts are written to:
 ```text
 results/four_color_penrose_program/
 results/cubic_edge_smoothing/
+results/maxwell_knot_fields/
 ```
 
 ## Repository Layout
@@ -126,14 +143,35 @@ scripts/check_cubic_edge_smoothing_lifts.py
 tests/test_cubic_edge_smoothing.py
     Exact partition and nonliftability tests.
 
+src/maxwell_knot_fields.py
+    Bateman potentials, magnetic core curves, and Maxwell residuals.
+
+src/goemans_conflict_fixture.py
+    Exact fractional-versus-integral conflict-core arithmetic.
+
+scripts/check_maxwell_knot_fields_gpu.py
+    CUDA fixture runner, projection diagnostics, plots, and reports.
+
+tests/test_maxwell_knot_fields.py
+    Closure, component, tangency, and Maxwell regression tests.
+
+tests/test_goemans_conflict_fixture.py
+    Exact 58-versus-60 arithmetic and feasibility tests.
+
 FOUR_COLOR_KNOT_PROOF_PROGRAM.md
     Mathematical proof-search program and claim boundaries.
+
+MAXWELL_KNOT_FIELD_PROGRAM.md
+    Maxwell equations, static obstruction, and analogy boundaries.
 
 results/four_color_penrose_program/
     Committed generated CSV, JSON, and Markdown artifacts.
 
 results/cubic_edge_smoothing/
     Committed edge-level, graph-level, audit, and report artifacts.
+
+results/maxwell_knot_fields/
+    CUDA diagnostics, CSVs, audit JSON, report, and 3D figures.
 ```
 
 ## Evidence Policy
@@ -145,6 +183,10 @@ results/cubic_edge_smoothing/
   identity.
 - Computational discoveries must be separated from unavoidability,
   termination, and lifting proofs.
+- Known Bateman torus-knot fixtures are not reported as new electromagnetic
+  solutions or new knot types.
+- Four-coloring a diagnostic conflict graph does not certify weighted
+  whole-trajectory selection.
 
 ## Primary Sources
 
@@ -156,6 +198,10 @@ results/cubic_edge_smoothing/
   https://thomas.math.gatech.edu/FC/fourcolor.html
 - Machine-readable configuration and discharging materials:
   https://thomas.math.gatech.edu/FC/ftpinfo.html
+- Kedia et al., *Tying knots in light fields*:
+  https://arxiv.org/abs/1302.0342
+- McDonald, *Can the Field Lines of a Permanent Magnet Be Tied in Knots?*:
+  https://kirkmcd.princeton.edu/examples/knot.pdf
 
 ## Provenance
 

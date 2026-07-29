@@ -1,0 +1,7 @@
+fixture_id,near_zero_field,closure_failure,alignment_failure,near_tangent_projection,ambiguous_over_under_depth,nonplanar_diagnostic_overlap_graph,catalog_passed
+hopfion_1_1,False,False,False,False,False,False,True
+linked_rings_1_2,False,False,False,False,False,False,True
+trefoil_2_3,False,False,False,False,False,False,True
+cinquefoil_2_5,False,False,False,False,False,False,True
+four_component_2_2,False,False,False,False,False,False,True
+torus_knot_3_4,False,False,False,False,False,False,True
