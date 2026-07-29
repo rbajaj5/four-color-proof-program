@@ -112,6 +112,22 @@ The existing state sum counts colorings exactly, but merely rewriting the
 count does not establish nonvanishing. The strict-positivity mechanism is the
 missing lemma.
 
+## Maxwell field-line side program
+
+`MAXWELL_KNOT_FIELD_PROGRAM.md` adds a physically constrained source of
+geometric knot fixtures. The exact Bateman/Kedia family is useful for testing
+projection algorithms because it supplies known `(p,q)` core knots while
+satisfying Maxwell's equations.
+
+The Four Color interface is deliberately narrow. A planar overlap graph can
+schedule local diagnostic work in four layers, but this does not prove knot
+equivalence or preserve a weighted fractional route selection. The exact
+`58` versus `60` triangle fixture in `src/goemans_conflict_fixture.py`
+falsifies that stronger bridge at the conflict-system level.
+
+This side program does not alter FC-C1 through FC-C3 and contributes no new
+proof of the Four Color Theorem.
+
 ## What would count as progress
 
 - A new local reduction proved to preserve 3-colorable states.
@@ -133,7 +149,8 @@ python -m pytest tests -q
 ```
 
 Outputs are written to `results/four_color_penrose_program/` and
-`results/cubic_edge_smoothing/`.
+`results/cubic_edge_smoothing/`. The separate Maxwell runner writes to
+`results/maxwell_knot_fields/`.
 
 ## Status
 
