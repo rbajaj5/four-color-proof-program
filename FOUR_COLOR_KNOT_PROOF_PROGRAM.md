@@ -81,6 +81,18 @@ diagrams such that:
 These four clauses would give a conceptual inductive proof. Clause 1 is an
 unavoidability theorem in new clothing and must not be assumed.
 
+The edge-smoothing experiment adds a necessary warning. For each edge, the
+parent Tait colorings partition between the two local pairings, but a smoothed
+child may be colorable while none of its colorings lift to the parent. Thus
+"the smaller graph is colorable" is too weak for clause 3. The reduction must
+control the liftable coloring sector explicitly.
+
+The replacement-edge boundary signature gives one small positive lemma: if
+the replacement edges are adjacent in the child, every proper child coloring
+lifts because adjacent edges receive distinct colors. This is a valid local
+lifting condition, but no unavoidability or global termination statement is
+claimed.
+
 ### FC-C2. Discrete Morse certificate on the smoothing cube
 
 Construct a matching or flow on non-3-colorable states so that at least one
@@ -116,10 +128,12 @@ More successful finite enumerations alone do not count as a better proof.
 
 ```text
 python scripts/check_four_color_penrose_fixtures.py
-python -m pytest tests/test_four_color_penrose.py -q
+python scripts/check_cubic_edge_smoothing_lifts.py
+python -m pytest tests -q
 ```
 
-Outputs are written to `results/four_color_penrose_program/`.
+Outputs are written to `results/four_color_penrose_program/` and
+`results/cubic_edge_smoothing/`.
 
 ## Status
 

@@ -51,6 +51,20 @@ The `K3,3` result is intentional: its genuine Tait count is 12, while the
 unmodified plane Penrose contraction cancels to zero. This prevents the
 implementation from silently treating a plane identity as embedding-free.
 
+The second exact experiment resolves both local smoothings of every edge in a
+small cubic-graph catalog and reconstructs every parent coloring that actually
+lifts. It tests the precise partition
+
+```text
+Col_3(G) = Lift_0(G,e) disjoint-union Lift_1(G,e)
+```
+
+and records colorable smoothing children whose colorings do not lift. Those
+rows are counterexamples to the tempting reduction rule "colorable child
+implies colorable parent." The exact replacement-edge criterion is recorded:
+a child coloring lifts precisely when its two replacement edges are assigned
+different colors.
+
 ## The Missing Lemma
 
 For a link diagram, smoothing choices form a Boolean cube. The
@@ -78,7 +92,9 @@ Each remains open.
 Python 3.11 or newer is recommended.
 
 ```bash
+python -m pip install -e ".[test,experiments]"
 python scripts/check_four_color_penrose_fixtures.py
+python scripts/check_cubic_edge_smoothing_lifts.py
 python -m pytest tests -q
 ```
 
@@ -86,6 +102,7 @@ Generated artifacts are written to:
 
 ```text
 results/four_color_penrose_program/
+results/cubic_edge_smoothing/
 ```
 
 ## Repository Layout
@@ -100,11 +117,23 @@ scripts/check_four_color_penrose_fixtures.py
 tests/test_four_color_penrose.py
     Exact regression tests and scope controls.
 
+src/cubic_edge_smoothing.py
+    Exact cubic edge smoothings and labeled coloring reconstruction.
+
+scripts/check_cubic_edge_smoothing_lifts.py
+    Deterministic local-reduction obstruction experiment.
+
+tests/test_cubic_edge_smoothing.py
+    Exact partition and nonliftability tests.
+
 FOUR_COLOR_KNOT_PROOF_PROGRAM.md
     Mathematical proof-search program and claim boundaries.
 
 results/four_color_penrose_program/
     Committed generated CSV, JSON, and Markdown artifacts.
+
+results/cubic_edge_smoothing/
+    Committed edge-level, graph-level, audit, and report artifacts.
 ```
 
 ## Evidence Policy

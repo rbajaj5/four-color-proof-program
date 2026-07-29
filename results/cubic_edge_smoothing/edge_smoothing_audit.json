@@ -1,0 +1,12 @@
+{
+  "fixtures": 8,
+  "parent_edges_checked": 108,
+  "smoothing_branches": 216,
+  "all_partition_identities_passed": true,
+  "colorable_but_nonliftable_children": 47,
+  "planar_parent_colorable_but_nonliftable_children": 17,
+  "adjacent_replacement_children": 33,
+  "adjacent_replacement_full_lift_passed": true,
+  "new_four_color_proof": false,
+  "new_theorem_claim": false
+}
