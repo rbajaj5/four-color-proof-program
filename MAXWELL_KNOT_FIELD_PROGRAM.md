@@ -221,6 +221,67 @@ The bands are diagnostics rather than universal physical divisions. The
 output records both absolute bending-energy depletion and each band's
 relative share after RG rescaling.
 
+## Quasiperiodic polyhedral coarse graining
+
+The Jenga analogy is refined by giving the ambient environment its own
+hierarchy. For each inflation level `ell`, the implementation builds three
+finite Fibonacci interval tilings with lengths `1` and the golden ratio,
+takes their Cartesian product, applies one fixed golden-ratio shear, and
+subdivides every box into six Freudenthal tetrahedra. The method therefore has
+three coupled but distinguishable channels:
+
+1. metric coarse graining: Fourier heat time `tau` smooths the knot;
+2. environmental coarse graining: `ell` inflates the tetrahedral cells; and
+3. retained topology: the cell itinerary records transitions, curvature
+   concentration, projected winding, and tangent holonomy; and
+4. force susceptibility: a normalized smooth-space-form response envelope is
+   evaluated at the cell diameter.
+
+For a fixed metric state, the finest-to-coarsest cell-count ratio measures
+environmental contraction without erasing the original curve. Conversely,
+for a fixed environment, varying `tau` measures geometric collapse without
+changing the tessellation rule. This two-parameter structure is more
+informative than treating every Fourier mode as an independent falling block.
+
+Galperin's polyhedral-geodesic formulas motivate two local diagnostics: each
+tetrahedron's vertex defects sum to `4 pi`, and tangent transport records a
+holonomy angle. The current knot, however, moves through cell interiors.
+Consequently, projected winding about cell centers is only an ambient proxy,
+not Galperin's signed surface vertex index, and cell defects are not summed as
+ambient curvature. A rigorous next stage would route each cell segment onto
+the cell boundary, unfold its crossed faces into the plane, and then evaluate
+Galperin's identity
+
+```text
+delta_L + sum_v Delta_v ind_L(v) = 2 pi k
+```
+
+on the resulting surface path. The bounded integer-relation search in the
+current defect library is also only a finite obstruction diagnostic, not a
+proof of generic rational independence.
+
+Coulton and Galperin's constant-curvature calculation adds a mechanics-aware
+but explicitly model-based observable:
+
+```text
+F_+(K,d) =  2 m v^2 sqrt(K) tan(sqrt(K) d / 2)
+F_-(K,d) = -2 m v^2 sqrt(-K) tanh(sqrt(-K) d / 2).
+```
+
+The runner evaluates these formulas per unit `m v^2`, using the occupied
+tetrahedron diameter as chart radius and half that diameter as a virtual pair
+separation. This records how the response scale changes under inflation. It
+does not assert that the Euclidean cells have smooth sectional curvature or
+exert a physical force.
+
+Run the CUDA experiment with:
+
+```text
+python scripts/check_quasiperiodic_polyhedral_rg_gpu.py
+```
+
+Outputs are written to `results/quasiperiodic_polyhedral_rg/`.
+
 ## Sources
 
 - K. T. McDonald, *Can the Field Lines of a Permanent Magnet Be Tied in
@@ -235,3 +296,9 @@ relative share after RG rescaling.
   https://doi.org/10.1007/s004930050043
 - Current planar SSUF formulation:
   https://doi.org/10.1007/s10107-026-02365-x
+- G. A. Galperin, *Convex Polyhedra Without Simple Closed Geodesics*:
+  https://www.ux1.eiu.edu/~ggalperin/papers/GeodesRCD.pdf
+- O. Gonzalez and J. H. Maddocks, global curvature and thickness:
+  https://pmc.ncbi.nlm.nih.gov/articles/PMC21766/
+- P. Coulton and G. Galperin, *Forces Along Equidistant Particle Paths*,
+  Math. Phys. Anal. Geom. 7 (2004), 187-192.
