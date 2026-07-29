@@ -1,0 +1,13 @@
+{
+  "fixture_count": 7,
+  "all_plane_penrose_identities_passed": true,
+  "all_declared_expected_counts_passed": true,
+  "new_four_color_proof": false,
+  "new_theorem": false,
+  "proof_program": [
+    "FC-C1",
+    "FC-C2",
+    "FC-C3"
+  ],
+  "primary_new_source": "https://arxiv.org/abs/2604.16635"
+}

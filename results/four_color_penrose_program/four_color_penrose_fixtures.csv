@@ -1,0 +1,8 @@
+fixture,vertices,edges,plane_embedding_declared,has_bridge,tait_coloring_count,signed_epsilon_sum,penrose_contraction,plane_penrose_identity_passed,expected_tait_count,expected_count_passed,role
+theta_plane_multigraph,2,3,True,False,6,-6,6,True,6,True,small planar multigraph calibration
+k4_tetrahedral,4,6,True,False,6,6,6,True,6,True,small simple planar calibration
+cube_graph,8,12,True,False,24,24,24,True,,,larger bridgeless planar fixture
+triangular_prism,6,9,True,False,6,-6,6,True,,,odd-face bridgeless planar fixture
+k33_nonplanar_control,6,9,False,False,12,0,0,,12,True,nonplanar signed-contraction boundary
+petersen_snark_control,10,15,False,False,0,0,0,,0,True,nonplanar uncolorable control
+planar_bridge_control,10,15,True,True,0,0,0,True,0,True,bridge obstruction control
