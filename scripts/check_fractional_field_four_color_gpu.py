@@ -34,6 +34,7 @@ from src.fractional_field_four_color import (
     estimate_hurst_from_structure_function,
     fractional_gaussian_surfaces,
     mixed_curvature_diagonals,
+    mixed_curvature_neighbor_prediction,
     periodic_closed_window,
     subsample_closed_window,
 )
@@ -124,6 +125,8 @@ def summarize(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
         "odd_degree_vertex_fraction",
         "main_diagonal_fraction",
         "neighbor_diagonal_sign_agreement",
+        "predicted_neighbor_diagonal_sign_agreement",
+        "neighbor_sign_agreement_residual",
         "mean_absolute_mixed_curvature",
     )
     for (hurst, grid_size), selected in sorted(grouped.items()):
@@ -269,7 +272,7 @@ def render_summary(
             marker="o",
             label=f"{grid_size}x{grid_size}",
         )
-        axes[1].plot(
+        empirical_line = axes[1].plot(
             hurst,
             [
                 float(row["mean_neighbor_diagonal_sign_agreement"])
@@ -277,6 +280,20 @@ def render_summary(
             ],
             marker="o",
             label=f"{grid_size}x{grid_size}",
+        )[0]
+        axes[1].plot(
+            hurst,
+            [
+                float(
+                    row[
+                        "mean_predicted_neighbor_diagonal_sign_agreement"
+                    ]
+                )
+                for row in selected
+            ],
+            linestyle="--",
+            color=empirical_line.get_color(),
+            alpha=0.8,
         )
     finest_pair = max(
         {
@@ -345,6 +362,8 @@ def make_report(
         "| {hurst:g} | {grid_size} | {mean_estimated_hurst:.3f} | "
         "{mean_odd_degree_vertex_fraction:.4f} | "
         "{mean_neighbor_diagonal_sign_agreement:.4f} | "
+        "{mean_predicted_neighbor_diagonal_sign_agreement:.4f} | "
+        "{mean_neighbor_sign_agreement_residual:+.4f} | "
         "{four_chromatic_rate:.4f} |".format(**row)
         for row in summaries
     )
@@ -383,6 +402,31 @@ needs at least four colors; the Four Color Theorem supplies the matching
 upper bound. Thus each finite instance has exact chromatic number three or
 four without treating a rendered color palette as evidence.
 
+At every interior grid vertex, the parity of its degree is the XOR of the
+four surrounding diagonal choices. Encoding a choice as a spin
+`sigma in {{-1,+1}}` gives the exact local identity
+
+`1[odd degree] = (1 - sigma_NW sigma_NE sigma_SW sigma_SE) / 2`.
+
+This identifies Four-color frustration with a finite `Z2` curvature defect.
+
+## Spectral Sign-Agreement Formula
+
+The mixed differences are centered jointly Gaussian. If two neighboring
+mixed differences have correlation `rho`, the Gaussian arcsine identity
+gives
+
+`P(equal signs) = 1/2 + asin(rho) / pi`.
+
+For the finite Fourier cutoff, `rho` is computed directly by summing the
+filtered spectral density
+
+`|k|^(-2(H+1)) |1-exp(i k_x a)|^2 |1-exp(i k_y a)|^2`
+
+against the one-cell translation phase. The report therefore compares an
+analytic finite-spectral prediction with CUDA observations; it does not fit
+the prediction to the samples.
+
 ## Exact Fixtures
 
 | Fixture | Odd vertices | Exact chromatic number | Explicit coloring proper |
@@ -403,8 +447,8 @@ four without treating a rendered color palette as evidence.
 
 ## Results
 
-| H | Grid | Estimated H | Odd-degree fraction | Neighbor sign agreement | Four-chromatic rate |
-| ---: | ---: | ---: | ---: | ---: | ---: |
+| H | Grid | Estimated H | Odd fraction | Agreement | Spectral prediction | Residual | Four-chromatic rate |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 {summary_table}
 
 At the finest grid, changing `H` from `{float(rough["hurst"]):g}` to
@@ -534,6 +578,13 @@ def main() -> None:
             diagonals_by_grid[grid_size] = diagonals
             statistics = curvature_triangulation_statistics(window)
             statistics_by_grid[grid_size] = statistics
+            prediction = mixed_curvature_neighbor_prediction(
+                periodic_resolution,
+                hurst,
+                stride,
+                device=device,
+                dtype=torch.float64,
+            )
             cpu_values = {
                 key: value.detach().cpu().numpy()
                 for key, value in statistics.items()
@@ -568,6 +619,15 @@ def main() -> None:
                             cpu_values[
                                 "neighbor_diagonal_sign_agreement"
                             ][sample_id]
+                        ),
+                        "predicted_neighbor_diagonal_sign_agreement": (
+                            prediction["predicted_sign_agreement"]
+                        ),
+                        "neighbor_sign_agreement_residual": float(
+                            cpu_values[
+                                "neighbor_diagonal_sign_agreement"
+                            ][sample_id]
+                            - prediction["predicted_sign_agreement"]
                         ),
                         "mean_absolute_mixed_curvature": float(
                             cpu_values[

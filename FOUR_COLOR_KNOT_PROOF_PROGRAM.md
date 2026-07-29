@@ -125,6 +125,15 @@ equivalence or preserve a weighted fractional route selection. The exact
 `58` versus `60` triangle fixture in `src/goemans_conflict_fixture.py`
 falsifies that stronger bridge at the conflict-system level.
 
+The generated special-case dictionary in
+`results/four_color_special_case_dictionary/` now records where Four Color
+is actually load-bearing. Bipartite and generic knot-diagram region cases
+need only two colors; triangle-free planar and Eulerian sphere
+triangulations have three-color mechanisms; non-Eulerian sphere
+triangulations invoke the four-color ceiling; Tait instances admit a
+Klein-four flow reformulation. Any interpretation involving weighted routes
+or resources is separately sent through the exact 58/60 relaxation audit.
+
 This side program does not alter FC-C1 through FC-C3 and contributes no new
 proof of the Four Color Theorem.
 

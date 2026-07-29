@@ -155,6 +155,38 @@ finite-cutoff construction inspired by Cao and Sheffield's fractional
 Gaussian forms; it does not construct a canonical continuum coloring. See
 [`FRACTIONAL_FIELD_FOUR_COLOR_REPORT.md`](results/fractional_field_four_color_gpu/FRACTIONAL_FIELD_FOUR_COLOR_REPORT.md).
 
+The finite Fourier model also admits an analytic explanation. Neighboring
+mixed-curvature values are jointly Gaussian, so their sign agreement is
+exactly `1/2 + asin(rho)/pi`; `rho` is an explicit filtered spectral sum.
+Across the full run, the largest absolute difference between the predicted
+and observed mean agreement was below `0.003`. At interior vertices, the
+degree parity is exactly the XOR of the four surrounding diagonal choices,
+or equivalently a local `Z2` curvature defect.
+
+The magnetic-knot bridge applies that parity construction to scalar
+potentials deposited from the curvature of heat-coarse-grained Bateman
+magnetic core knots. Its 432-map CUDA sweep covers the trefoil, cinquefoil,
+and `T(3,4)` cores, two curvature channels, two bandwidths, nine RG scales,
+and four resolutions. Four colors are encoded as `Z2 x Z2`, so edge
+differences produce a nonzero conserved Klein-four flow on the dual cubic
+graph. All 24 representative certificates passed.
+
+Unlike the rough fractional fields, the knot potentials had odd-defect
+counts scaling with mean exponent `1.188` rather than the area-filling
+exponent two. This agrees with a conditional geometric bound: if the
+finite-difference mixed-curvature zero set is regular with uniformly bounded
+length, parity defects lie in its `O(h)` tube, giving `O(h^-1)` defects and
+`O(h)` density. See
+[`CURVATURE_KNOT_FOUR_COLOR_REPORT.md`](results/curvature_knot_four_color_gpu/CURVATURE_KNOT_FOUR_COLOR_REPORT.md).
+
+A generated
+[`Four Color special-case dictionary`](results/four_color_special_case_dictionary/FOUR_COLOR_SPECIAL_CASE_DICTIONARY.md)
+separates bipartite, triangle-free, checkerboard knot-region, Eulerian
+triangulation, Tait/Klein-flow, curvature-map, and arbitrary planar cases.
+Its Goemans-style weighted control keeps the exact 58/60 integrality gap
+visible: planar colorability can schedule conflict-free layers without
+lifting a fractional weighted choice to an integral whole-route choice.
+
 ## The Missing Lemma
 
 For a link diagram, smoothing choices form a Boolean cube. The
@@ -193,6 +225,9 @@ python scripts/check_magnetic_braid_mhd_gpu.py --smoke
 python scripts/check_magnetic_braid_mhd_gpu.py
 python scripts/check_fractional_field_four_color_gpu.py --smoke
 python scripts/check_fractional_field_four_color_gpu.py
+python scripts/check_curvature_knot_four_color_gpu.py --smoke
+python scripts/check_curvature_knot_four_color_gpu.py
+python scripts/build_four_color_special_case_dictionary.py
 python -m pytest tests -q
 ```
 
@@ -208,6 +243,9 @@ results/magnetic_braid_mhd_gpu_smoke/
 results/magnetic_braid_mhd_gpu/
 results/fractional_field_four_color_gpu_smoke/
 results/fractional_field_four_color_gpu/
+results/curvature_knot_four_color_gpu_smoke/
+results/curvature_knot_four_color_gpu/
+results/four_color_special_case_dictionary/
 ```
 
 ## Repository Layout
@@ -288,6 +326,24 @@ scripts/check_fractional_field_four_color_gpu.py
 tests/test_fractional_field_four_color.py
     Fourier, compactification, parity, coloring, transport, and scaling tests.
 
+src/curvature_knot_four_color.py
+    Curvature deposition, knot-map dissections, faces, and Klein-flow checks.
+
+scripts/check_curvature_knot_four_color_gpu.py
+    CUDA knot/RG/grid sweep, scaling fits, flow certificates, and figures.
+
+tests/test_curvature_knot_four_color.py
+    Curvature-channel, potential, face-count, and conserved-flow tests.
+
+src/four_color_special_cases.py
+    Claim-bounded special-case registry and weighted-lift diagnosis.
+
+scripts/build_four_color_special_case_dictionary.py
+    Generate the special-case CSV, report, and diagnostic matrix.
+
+tests/test_four_color_special_cases.py
+    Registry integrity and exact Goemans-style control tests.
+
 FOUR_COLOR_KNOT_PROOF_PROGRAM.md
     Mathematical proof-search program and claim boundaries.
 
@@ -316,6 +372,13 @@ results/magnetic_braid_mhd_gpu/
 results/fractional_field_four_color_gpu/
     CUDA finite-map sweep, exact fixture certificates, multiscale transport
     tables, device audit, report, and coloring figures.
+
+results/curvature_knot_four_color_gpu/
+    CUDA curvature/RG map sweep, defect scaling, Klein-flow certificates,
+    reports, and explicit colorings.
+
+results/four_color_special_case_dictionary/
+    Special-case registry, weighted-lift diagnosis, report, and matrix.
 ```
 
 ## Evidence Policy
@@ -353,6 +416,13 @@ results/fractional_field_four_color_gpu/
 - Curvature-selected diagonals are a declared finite discretization. Four
   Color certifies each compactified triangulation but does not supply a
   canonical measurable coloring compatible across cutoff scales.
+- The regular-nodal-set defect bound is conditional on transversality and a
+  uniform nodal-length bound; fitted scaling exponents do not prove those
+  assumptions.
+- Klein-four edge labels are exact discrete graph flows, not physical
+  magnetic fluxes.
+- A planar coloring does not imply that a fractional weighted solution lifts
+  to an integral route or resource allocation.
 
 ## Primary Sources
 

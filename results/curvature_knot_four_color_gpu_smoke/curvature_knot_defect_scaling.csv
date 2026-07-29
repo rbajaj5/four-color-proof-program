@@ -1,0 +1,7 @@
+fixture_id,channel,bandwidth,tau,grid_count,odd_count_scaling_exponent,odd_fraction_scaling_exponent,log_log_r_squared,minimum_grid_size,maximum_grid_size
+trefoil_T_2_3,curvature_density,0.16,0.0,2,1.2223924213364463,-0.7776075786635537,1.0,9,17
+trefoil_T_2_3,curvature_density,0.16,0.01,2,1.3093280581077276,-0.6906719418922724,1.0,9,17
+trefoil_T_2_3,curvature_density,0.16,0.1,2,1.1375035237499345,-0.8624964762500655,1.0,9,17
+trefoil_T_2_3,signed_turning,0.16,0.0,2,1.212993723334197,-0.787006276665803,1.0,9,17
+trefoil_T_2_3,signed_turning,0.16,0.01,2,1.2801079191927347,-0.7198920808072653,1.0,9,17
+trefoil_T_2_3,signed_turning,0.16,0.1,2,1.3081222953623304,-0.6918777046376696,1.0,9,17

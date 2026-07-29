@@ -1,0 +1,4 @@
+fixture_id,tau,maps_written,elapsed_seconds
+trefoil_T_2_3,0.0,4,0.5191517999919597
+trefoil_T_2_3,0.01,4,0.01740090000384953
+trefoil_T_2_3,0.1,4,0.03432059999613557

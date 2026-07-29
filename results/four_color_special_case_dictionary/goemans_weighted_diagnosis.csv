@@ -1,0 +1,2 @@
+case_id,edge_relaxation_feasible,fractional_direct_cost,minimum_integral_direct_cost,integrality_gap,missing_odd_cycle_slack,proper_color_bound,coloring_implies_integral_lift,diagnosis
+weighted_planar_conflict_triangle,True,58,60,2,-1/15,3,False,add the triangle odd-cycle inequality; do not infer weighted whole-route integrality from planar colorability

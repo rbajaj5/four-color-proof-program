@@ -1,0 +1,5 @@
+fixture_id,tau,channel,bandwidth,grid_size,chromatic_number,face_count,all_edge_fluxes_nonzero,all_dual_vertices_conserved,flux_1_fraction,flux_2_fraction,flux_3_fraction
+trefoil_T_2_3,0.0,curvature_density,0.16,9,4,160,True,True,0.3333333333333333,0.3333333333333333,0.3333333333333333
+trefoil_T_2_3,0.0,signed_turning,0.16,9,4,160,True,True,0.3333333333333333,0.3333333333333333,0.3333333333333333
+trefoil_T_2_3,0.1,curvature_density,0.16,9,4,160,True,True,0.3333333333333333,0.3333333333333333,0.3333333333333333
+trefoil_T_2_3,0.1,signed_turning,0.16,9,4,160,True,True,0.3333333333333333,0.3333333333333333,0.3333333333333333

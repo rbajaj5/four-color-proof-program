@@ -28,6 +28,31 @@ needs at least four colors; the Four Color Theorem supplies the matching
 upper bound. Thus each finite instance has exact chromatic number three or
 four without treating a rendered color palette as evidence.
 
+At every interior grid vertex, the parity of its degree is the XOR of the
+four surrounding diagonal choices. Encoding a choice as a spin
+`sigma in {-1,+1}` gives the exact local identity
+
+`1[odd degree] = (1 - sigma_NW sigma_NE sigma_SW sigma_SE) / 2`.
+
+This identifies Four-color frustration with a finite `Z2` curvature defect.
+
+## Spectral Sign-Agreement Formula
+
+The mixed differences are centered jointly Gaussian. If two neighboring
+mixed differences have correlation `rho`, the Gaussian arcsine identity
+gives
+
+`P(equal signs) = 1/2 + asin(rho) / pi`.
+
+For the finite Fourier cutoff, `rho` is computed directly by summing the
+filtered spectral density
+
+`|k|^(-2(H+1)) |1-exp(i k_x a)|^2 |1-exp(i k_y a)|^2`
+
+against the one-cell translation phase. The report therefore compares an
+analytic finite-spectral prediction with CUDA observations; it does not fit
+the prediction to the samples.
+
 ## Exact Fixtures
 
 | Fixture | Odd vertices | Exact chromatic number | Explicit coloring proper |
@@ -45,27 +70,27 @@ four without treating a rendered color palette as evidence.
 - Periodic Fourier resolution: `64`
 - H values: `[0.1, 0.25, 0.5, 0.75, 0.9]`
 - Peak CUDA allocation: `55700992` bytes
-- Total elapsed: `0.554` seconds
+- Total elapsed: `0.373` seconds
 
 ## Results
 
-| H | Grid | Estimated H | Odd-degree fraction | Neighbor sign agreement | Four-chromatic rate |
-| ---: | ---: | ---: | ---: | ---: | ---: |
-| 0.1 | 17 | 0.306 | 0.4131 | 0.3573 | 1.0000 |
-| 0.1 | 33 | 0.306 | 0.4299 | 0.3661 | 1.0000 |
-| 0.1 | 65 | 0.306 | 0.4647 | 0.4087 | 1.0000 |
-| 0.25 | 17 | 0.390 | 0.4230 | 0.3688 | 1.0000 |
-| 0.25 | 33 | 0.390 | 0.4386 | 0.3776 | 1.0000 |
-| 0.25 | 65 | 0.390 | 0.4733 | 0.4226 | 1.0000 |
-| 0.5 | 17 | 0.541 | 0.4437 | 0.3930 | 1.0000 |
-| 0.5 | 33 | 0.541 | 0.4566 | 0.4016 | 1.0000 |
-| 0.5 | 65 | 0.541 | 0.4867 | 0.4494 | 1.0000 |
-| 0.75 | 17 | 0.698 | 0.4634 | 0.4266 | 1.0000 |
-| 0.75 | 33 | 0.698 | 0.4742 | 0.4338 | 1.0000 |
-| 0.75 | 65 | 0.698 | 0.4945 | 0.4808 | 1.0000 |
-| 0.9 | 17 | 0.776 | 0.4775 | 0.4523 | 1.0000 |
-| 0.9 | 33 | 0.776 | 0.4834 | 0.4585 | 1.0000 |
-| 0.9 | 65 | 0.776 | 0.4959 | 0.5040 | 1.0000 |
+| H | Grid | Estimated H | Odd fraction | Agreement | Spectral prediction | Residual | Four-chromatic rate |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 0.1 | 17 | 0.306 | 0.4131 | 0.3573 | 0.3583 | -0.0010 | 1.0000 |
+| 0.1 | 33 | 0.306 | 0.4299 | 0.3661 | 0.3659 | +0.0002 | 1.0000 |
+| 0.1 | 65 | 0.306 | 0.4647 | 0.4087 | 0.4089 | -0.0002 | 1.0000 |
+| 0.25 | 17 | 0.390 | 0.4230 | 0.3688 | 0.3692 | -0.0004 | 1.0000 |
+| 0.25 | 33 | 0.390 | 0.4386 | 0.3776 | 0.3772 | +0.0004 | 1.0000 |
+| 0.25 | 65 | 0.390 | 0.4733 | 0.4226 | 0.4229 | -0.0004 | 1.0000 |
+| 0.5 | 17 | 0.541 | 0.4437 | 0.3930 | 0.3935 | -0.0005 | 1.0000 |
+| 0.5 | 33 | 0.541 | 0.4566 | 0.4016 | 0.4014 | +0.0002 | 1.0000 |
+| 0.5 | 65 | 0.541 | 0.4867 | 0.4494 | 0.4496 | -0.0002 | 1.0000 |
+| 0.75 | 17 | 0.698 | 0.4634 | 0.4266 | 0.4259 | +0.0008 | 1.0000 |
+| 0.75 | 33 | 0.698 | 0.4742 | 0.4338 | 0.4333 | +0.0005 | 1.0000 |
+| 0.75 | 65 | 0.698 | 0.4945 | 0.4808 | 0.4813 | -0.0006 | 1.0000 |
+| 0.9 | 17 | 0.776 | 0.4775 | 0.4523 | 0.4493 | +0.0029 | 1.0000 |
+| 0.9 | 33 | 0.776 | 0.4834 | 0.4585 | 0.4568 | +0.0017 | 1.0000 |
+| 0.9 | 65 | 0.776 | 0.4959 | 0.5040 | 0.5036 | +0.0004 | 1.0000 |
 
 At the finest grid, changing `H` from `0.1` to
 `0.9` changed curvature-sign agreement from
@@ -116,7 +141,7 @@ states.
 ## Performance
 
 Mean per-H GPU group time was
-`0.080`
+`0.058`
 seconds. Only finite summaries and one visualization fixture were
 transferred to CPU.
 
