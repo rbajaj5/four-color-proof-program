@@ -19,6 +19,7 @@ from src.quasiperiodic_polyhedral_rg import (
     projected_winding_numbers,
     quasiperiodic_tetrahedral_itinerary,
     space_form_coupling_force,
+    specular_reflection,
     tangent_holonomy,
     tetrahedron_vertex_defects,
     tetrahedron_vertices,
@@ -93,6 +94,17 @@ def test_space_form_force_has_correct_sign_and_linear_limit() -> None:
     force = space_form_coupling_force(curvature, separation)
     linear = curvature * separation
     assert torch.allclose(force, linear, rtol=5e-7, atol=1e-14)
+
+
+def test_specular_reflection_is_isometric_and_involutive() -> None:
+    velocity = torch.tensor((1.0, -2.0, -3.0), dtype=torch.float64)
+    normal = torch.tensor((0.0, 0.0, 2.0), dtype=torch.float64)
+    reflected = specular_reflection(velocity, normal)
+    assert reflected.tolist() == [1.0, -2.0, 3.0]
+    assert torch.linalg.vector_norm(reflected) == pytest.approx(
+        torch.linalg.vector_norm(velocity)
+    )
+    assert torch.allclose(specular_reflection(reflected, normal), velocity)
 
 
 def test_circle_tangent_holonomy_and_projected_winding() -> None:

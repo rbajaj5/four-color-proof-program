@@ -124,6 +124,18 @@ local cell diagnostics; the ambient knot does not yet satisfy the hypotheses
 of Galperin's surface-geodesic identities. See
 [`QUASIPERIODIC_POLYHEDRAL_RG_REPORT.md`](results/quasiperiodic_polyhedral_rg/QUASIPERIODIC_POLYHEDRAL_RG_REPORT.md).
 
+The next CUDA branch moves from prescribed electromagnetic knot cores to the
+analytic line-tied magnetic-braid family of Wilmot-Smith, Hornig, and Pontin.
+A uniform guide field is perturbed by alternating Gaussian toroidal flux
+rings. The experiment sweeps 108 braid/diffusion configurations and records
+neighbor winding, footpoint-map squashing and stretching, current, Lorentz
+force, divergence residuals, and tangent motion on the direction sphere.
+An exact free-diffusion subflow supplies a controlled coarse-graining axis;
+it is not a full resistive-MHD simulation. Targeted 25x25 and 49x49 audits
+separate converged diffused mappings from undiffused states whose `Q` layers
+remain finer than the sampling grid. See
+[`MAGNETIC_BRAID_MHD_REPORT.md`](results/magnetic_braid_mhd_gpu/MAGNETIC_BRAID_MHD_REPORT.md).
+
 ## The Missing Lemma
 
 For a link diagram, smoothing choices form a Boolean cube. The
@@ -158,6 +170,8 @@ python scripts/check_maxwell_knot_fields_gpu.py
 python scripts/check_curvature_rg_knot_collapse_gpu.py
 python scripts/check_curvature_rg_multiscale_gpu.py
 python scripts/check_quasiperiodic_polyhedral_rg_gpu.py
+python scripts/check_magnetic_braid_mhd_gpu.py --smoke
+python scripts/check_magnetic_braid_mhd_gpu.py
 python -m pytest tests -q
 ```
 
@@ -169,6 +183,8 @@ results/cubic_edge_smoothing/
 results/maxwell_knot_fields/
 results/curvature_rg_knot_collapse/
 results/quasiperiodic_polyhedral_rg/
+results/magnetic_braid_mhd_gpu_smoke/
+results/magnetic_braid_mhd_gpu/
 ```
 
 ## Repository Layout
@@ -228,6 +244,17 @@ scripts/check_quasiperiodic_polyhedral_rg_gpu.py
 tests/test_quasiperiodic_polyhedral_rg.py
     Axis, tetrahedral defect, inflation, turning, holonomy, and winding tests.
 
+src/magnetic_braid_mhd.py
+    Divergence-free line-tied braid fields, exact Gaussian diffusion,
+    field-line integration, winding, mapping, and direction-sphere metrics.
+
+scripts/check_magnetic_braid_mhd_gpu.py
+    CUDA parameter sweep, coarse-graining ledger, refinement audit, figures,
+    and report generator.
+
+tests/test_magnetic_braid_mhd.py
+    Divergence, diffusion, mapping, current, winding, and spherical-path tests.
+
 FOUR_COLOR_KNOT_PROOF_PROGRAM.md
     Mathematical proof-search program and claim boundaries.
 
@@ -248,6 +275,10 @@ results/curvature_rg_knot_collapse/
 
 results/quasiperiodic_polyhedral_rg/
     CUDA hierarchy ledger, defect library, audit, report, and schematics.
+
+results/magnetic_braid_mhd_gpu/
+    CUDA field-line sweep, physical diagnostics, multiscale ledger,
+    grid-refinement audit, report, and phase/trajectory figures.
 ```
 
 ## Evidence Policy
@@ -272,6 +303,13 @@ results/quasiperiodic_polyhedral_rg/
   is not a physical force produced by the ambient Euclidean tiling.
 - Heat-flow crossing changes are one-sided diagnostics, not complete knot
   classifications or topology-preserving simplifications.
+- Free diffusion of the analytic magnetic perturbation is not full
+  resistive MHD, and large `Q` values are not reconnection rates.
+- Pairwise winding of open line-tied strands is not a closed-knot invariant.
+- Finite-difference `Q` estimates whose area-preservation residual has not
+  converged are reported as unresolved fine structure, not point estimates.
+- The direction-tube picture is Kakeya-like only as an incidence analogy;
+  the finite collision-diagonal complement is not a Kakeya set.
 
 ## Primary Sources
 
@@ -287,6 +325,10 @@ results/quasiperiodic_polyhedral_rg/
   https://arxiv.org/abs/1302.0342
 - McDonald, *Can the Field Lines of a Permanent Magnet Be Tied in Knots?*:
   https://kirkmcd.princeton.edu/examples/knot.pdf
+- Wilmot-Smith, Hornig, and Pontin, *Magnetic Braiding and
+  Quasi-Separatrix Layers*: https://arxiv.org/abs/0907.3820
+- Wilmot-Smith, Hornig, and Pontin, *Magnetic Braiding and Parallel Electric
+  Fields*: https://arxiv.org/abs/0810.1415
 
 ## Provenance
 
