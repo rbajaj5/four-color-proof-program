@@ -134,6 +134,17 @@ triangulations invoke the four-color ceiling; Tait instances admit a
 Klein-four flow reformulation. Any interpretation involving weighted routes
 or resources is separately sent through the exact 58/60 relaxation audit.
 
+The dictionary also includes the algorithmic distinction in Or Zamir's
+*k-Coloring is Faster than Computing the Chromatic Number*
+(arXiv:2607.25973). For an arbitrary planar graph that survives the
+bipartite and structural checks, exact chromatic diagnosis needs only a
+fixed 3-color decision: YES leaves `chi=3` after the lower-bound checks,
+while NO combines with Four Color to give `chi=4`. Zamir proves a randomized
+sub-`2^n` route for every fixed palette and a polynomial-overhead
+decision-to-search reduction. This repository records that theorem as a
+fallback; it does not reimplement the general bootstrap, and it keeps
+weighted path selection outside the theorem's scope.
+
 This side program does not alter FC-C1 through FC-C3 and contributes no new
 proof of the Four Color Theorem.
 

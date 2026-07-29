@@ -186,6 +186,13 @@ triangulation, Tait/Klein-flow, curvature-map, and arbitrary planar cases.
 Its Goemans-style weighted control keeps the exact 58/60 integrality gap
 visible: planar colorability can schedule conflict-free layers without
 lifting a fractional weighted choice to an integral whole-route choice.
+The dictionary now also records Zamir's fixed-palette theorem as a generic
+algorithmic fallback. For a remaining arbitrary planar graph, the useful
+query is 3-colorability: a YES gives `chi <= 3`, while a NO and Four Color
+give `chi = 4`. Structured cases continue to use bipartite, checkerboard,
+parity, or Klein-flow certificates before any exponential search. The
+repository records Zamir's theorem and decision-to-search route but does not
+reimplement the paper's randomized sub-`2^n` algorithm.
 
 ## The Missing Lemma
 
@@ -336,13 +343,16 @@ tests/test_curvature_knot_four_color.py
     Curvature-channel, potential, face-count, and conserved-flow tests.
 
 src/four_color_special_cases.py
-    Claim-bounded special-case registry and weighted-lift diagnosis.
+    Claim-bounded special-case registry, planar decision hierarchy,
+    fixed-palette solver diagnosis, and weighted-lift warning.
 
 scripts/build_four_color_special_case_dictionary.py
-    Generate the special-case CSV, report, and diagnostic matrix.
+    Generate the special-case, Zamir-solver, hierarchy, and weighted
+    diagnostics with two matrices.
 
 tests/test_four_color_special_cases.py
-    Registry integrity and exact Goemans-style control tests.
+    Registry integrity, planar theorem routing, fixed-palette scope, and
+    exact Goemans-style control tests.
 
 FOUR_COLOR_KNOT_PROOF_PROGRAM.md
     Mathematical proof-search program and claim boundaries.
@@ -378,7 +388,8 @@ results/curvature_knot_four_color_gpu/
     reports, and explicit colorings.
 
 results/four_color_special_case_dictionary/
-    Special-case registry, weighted-lift diagnosis, report, and matrix.
+    Special-case registry, fixed-palette solver hierarchy, weighted-lift
+    diagnosis, report, and matrices.
 ```
 
 ## Evidence Policy
@@ -423,6 +434,8 @@ results/four_color_special_case_dictionary/
   magnetic fluxes.
 - A planar coloring does not imply that a fractional weighted solution lifts
   to an integral route or resource allocation.
+- Zamir's fixed-palette result is a theoretical colorability fallback, not a
+  weighted solver or a reimplemented practical coloring engine.
 
 ## Primary Sources
 
@@ -434,6 +447,8 @@ results/four_color_special_case_dictionary/
   https://thomas.math.gatech.edu/FC/fourcolor.html
 - Machine-readable configuration and discharging materials:
   https://thomas.math.gatech.edu/FC/ftpinfo.html
+- Zamir, *k-Coloring is Faster than Computing the Chromatic Number*:
+  https://arxiv.org/abs/2607.25973
 - Kedia et al., *Tying knots in light fields*:
   https://arxiv.org/abs/1302.0342
 - McDonald, *Can the Field Lines of a Permanent Magnet Be Tied in Knots?*:
