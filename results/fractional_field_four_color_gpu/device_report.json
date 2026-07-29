@@ -1,0 +1,30 @@
+{
+  "python_executable": "C:\\Users\\anaxe\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+  "python_version": "3.12.10",
+  "torch_version": "2.12.0.dev20260408+cu128",
+  "torch_cuda_available": true,
+  "torch_cuda_version": "12.8",
+  "actual_device": "cuda",
+  "gpu_name": "NVIDIA GeForce RTX 5070 Ti Laptop GPU",
+  "cuda_used": true,
+  "dtype": "torch.float32",
+  "smoke": false,
+  "batch_size": 256,
+  "periodic_resolution": 64,
+  "hurst_values": [
+    0.1,
+    0.25,
+    0.5,
+    0.75,
+    0.9
+  ],
+  "grid_sizes": [
+    17,
+    33,
+    65
+  ],
+  "peak_cuda_memory_bytes": 55700992,
+  "elapsed_seconds": 0.5541264000057708,
+  "continuum_infinite_coloring_constructed": false,
+  "finite_planar_triangulations_certified": true
+}

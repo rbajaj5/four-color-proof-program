@@ -345,6 +345,58 @@ deliberately. Outputs are written to
 `results/magnetic_braid_mhd_gpu_smoke/` and
 `results/magnetic_braid_mhd_gpu/`.
 
+## Fractional-field curvature maps
+
+Cao and Sheffield's fractional Gaussian forms provide a natural roughness
+axis for the finite-map layer. In two dimensions the scalar field is
+formally
+
+```text
+FGF_s = (-Delta)^(-s/2) W,    H = s - 1,
+```
+
+where `H` controls scaling and regularity. The implemented CUDA experiment
+uses a periodic finite Fourier cutoff, not a pointwise claim about a
+continuum generalized field.
+
+For each lattice square, the sign of
+
+```text
+h00 + h11 - h10 - h01
+```
+
+chooses one diagonal. Adding an exterior vertex joined to the square
+boundary produces a sphere triangulation with `E = 3V - 6`. The standard
+Eulerian-triangulation criterion then makes the chromatic classification
+exact: all degrees even gives chromatic number three, while any odd degree
+forces four. The odd-degree fraction is recorded as a finite
+**Four-color frustration density**.
+
+Across 3,840 maps, smoother fields showed more persistent curvature choices:
+the 17-to-65 majority transport mismatch fell monotonically from `0.3303` at
+`H=0.1` to `0.2059` at `H=0.9`. Neighbor curvature-sign agreement rose at
+the same time. The experiment therefore identifies a useful finite
+multiscale statistic, not a new proof of Four Color or a canonical infinite
+coloring.
+
+Cao and Sheffield also describe divergence-free fractional Gaussian
+1-forms, while their Chern-Simons discussion formally connects
+`(J, curl^(-1) J)` to the Gauss linking integral for divergence-free
+currents. That suggests a later controlled extension: perturb the analytic
+line-tied flux-tube field by a divergence-free fractional 1-form and apply
+the finite curvature-map diagnostic on transverse slices. Colors would
+remain combinatorial certificates, not gauge states.
+
+Run:
+
+```text
+python scripts/check_fractional_field_four_color_gpu.py --smoke
+python scripts/check_fractional_field_four_color_gpu.py
+```
+
+Outputs are written to `results/fractional_field_four_color_gpu_smoke/` and
+`results/fractional_field_four_color_gpu/`.
+
 ## Sources
 
 - K. T. McDonald, *Can the Field Lines of a Permanent Magnet Be Tied in
@@ -369,3 +421,5 @@ deliberately. Outputs are written to
   Quasi-Separatrix Layers*: https://arxiv.org/abs/0907.3820
 - A. L. Wilmot-Smith, G. Hornig, and D. I. Pontin, *Magnetic Braiding and
   Parallel Electric Fields*: https://arxiv.org/abs/0810.1415
+- S. Cao and S. Sheffield, *Fractional Gaussian Forms and Gauge Theory: An
+  Overview*: https://arxiv.org/abs/2406.19321

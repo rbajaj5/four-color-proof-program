@@ -136,6 +136,25 @@ separate converged diffused mappings from undiffused states whose `Q` layers
 remain finer than the sampling grid. See
 [`MAGNETIC_BRAID_MHD_REPORT.md`](results/magnetic_braid_mhd_gpu/MAGNETIC_BRAID_MHD_REPORT.md).
 
+The fractional-field CUDA branch turns the scaling idea into a finite planar
+map experiment. It samples cutoff fractional Gaussian surfaces with Hurst
+parameter `H`, uses the sign of the discrete mixed curvature in each square
+to select a diagonal, and compactifies the boundary with one exterior
+vertex. Every output is therefore a sphere triangulation. Such a
+triangulation is 3-colorable exactly when every vertex has even degree;
+otherwise its exact chromatic number is four. This gives a certified local
+statistic, the odd-degree or **Four-color frustration density**, without
+mistaking a rendered palette for evidence.
+
+The 3,840-map CUDA sweep found that increasing `H` from `0.1` to `0.9`
+increased fine-grid curvature-sign agreement from `0.4087` to `0.5040` and
+decreased 17-to-65 scale-transport mismatch from `0.3303` to `0.2059`.
+Every stochastic sample was exactly four-chromatic, while exact checkerboard
+and one-flip fixtures exercise the three- and four-color cases. This is a
+finite-cutoff construction inspired by Cao and Sheffield's fractional
+Gaussian forms; it does not construct a canonical continuum coloring. See
+[`FRACTIONAL_FIELD_FOUR_COLOR_REPORT.md`](results/fractional_field_four_color_gpu/FRACTIONAL_FIELD_FOUR_COLOR_REPORT.md).
+
 ## The Missing Lemma
 
 For a link diagram, smoothing choices form a Boolean cube. The
@@ -172,6 +191,8 @@ python scripts/check_curvature_rg_multiscale_gpu.py
 python scripts/check_quasiperiodic_polyhedral_rg_gpu.py
 python scripts/check_magnetic_braid_mhd_gpu.py --smoke
 python scripts/check_magnetic_braid_mhd_gpu.py
+python scripts/check_fractional_field_four_color_gpu.py --smoke
+python scripts/check_fractional_field_four_color_gpu.py
 python -m pytest tests -q
 ```
 
@@ -185,6 +206,8 @@ results/curvature_rg_knot_collapse/
 results/quasiperiodic_polyhedral_rg/
 results/magnetic_braid_mhd_gpu_smoke/
 results/magnetic_braid_mhd_gpu/
+results/fractional_field_four_color_gpu_smoke/
+results/fractional_field_four_color_gpu/
 ```
 
 ## Repository Layout
@@ -255,6 +278,16 @@ scripts/check_magnetic_braid_mhd_gpu.py
 tests/test_magnetic_braid_mhd.py
     Divergence, diffusion, mapping, current, winding, and spherical-path tests.
 
+src/fractional_field_four_color.py
+    CUDA fractional Gaussian surfaces, curvature triangulations, exact
+    parity classification, DSATUR certificates, and scale transport.
+
+scripts/check_fractional_field_four_color_gpu.py
+    CUDA Hurst-parameter sweep, exact fixtures, visualizations, and report.
+
+tests/test_fractional_field_four_color.py
+    Fourier, compactification, parity, coloring, transport, and scaling tests.
+
 FOUR_COLOR_KNOT_PROOF_PROGRAM.md
     Mathematical proof-search program and claim boundaries.
 
@@ -279,6 +312,10 @@ results/quasiperiodic_polyhedral_rg/
 results/magnetic_braid_mhd_gpu/
     CUDA field-line sweep, physical diagnostics, multiscale ledger,
     grid-refinement audit, report, and phase/trajectory figures.
+
+results/fractional_field_four_color_gpu/
+    CUDA finite-map sweep, exact fixture certificates, multiscale transport
+    tables, device audit, report, and coloring figures.
 ```
 
 ## Evidence Policy
@@ -310,6 +347,12 @@ results/magnetic_braid_mhd_gpu/
   converged are reported as unresolved fine structure, not point estimates.
 - The direction-tube picture is Kakeya-like only as an incidence analogy;
   the finite collision-diagonal complement is not a Kakeya set.
+- A cutoff fractional Gaussian surface is not literally an infinite
+  coloring. Its Hurst parameter controls scaling and regularity, not
+  chromatic or Hausdorff dimension by itself.
+- Curvature-selected diagonals are a declared finite discretization. Four
+  Color certifies each compactified triangulation but does not supply a
+  canonical measurable coloring compatible across cutoff scales.
 
 ## Primary Sources
 
