@@ -1,0 +1,147 @@
+# Magnetic Braid MHD GPU Report
+
+## Scope
+
+This branch sweeps the analytic line-tied magnetic braid family introduced by
+Wilmot-Smith, Hornig, and Pontin for model solar coronal loops. Each field is
+a uniform vertical guide field plus localized toroidal flux rings. The
+construction is analytically divergence-free.
+
+The `diffusion_time` parameter applies the exact free heat evolution
+`partial_t B = eta Laplacian(B)` to each Gaussian ring perturbation, with the
+product `eta t` represented by the parameter. It is a resistive coarse-
+graining subflow, **not** a complete resistive-MHD solution: velocity,
+pressure, density, energy transport, and reconnection feedback are absent.
+
+## Bundle Geometry
+
+The individual-line observable is pairwise winding of neighboring field
+lines. The bundle observable is the differential of the lower-to-upper
+footpoint map. Its squashing factor `Q`, largest singular value, and
+finite-length Lyapunov exponent quantify the wavefront-like deformation of a
+small line bundle. This is the magnetic analogue adopted from the billiard
+wavefront intuition; magnetic field lines remain line-tied and are not
+specularly reflected.
+
+The normalized magnetic tangent is also projected to the upper direction
+sphere. Its spherical path length is a smooth analogue of Galperin's finite
+angular budget for reflected rays. Spatial decimation and direction-space
+arc loss are reported separately.
+
+At each axial slice, the collection of distinct line positions lies in a
+configuration-space complement of pair-collision diagonals. Pairwise winding
+records local motion around those forbidden sets. The many direction tubes
+have a Kakeya-like visual appearance, but this finite, constrained family is
+not a Kakeya set and no Kakeya dimension claim is made.
+
+## CUDA Audit
+
+- Actual device: `cuda`
+- GPU: `NVIDIA GeForce RTX 5070 Ti Laptop GPU`
+- CUDA used: `True`
+- Dtype: `torch.float32`
+- Configurations: `108`
+- Field lines per configuration: `169`
+- Steps per elementary cycle: `128`
+- Total integrated line steps: `4672512`
+- Peak CUDA allocation: `270054400` bytes
+- Total elapsed: `25.858` seconds
+
+## Results by Braid Complexity and Diffusion
+
+| Cycles | Diffusion | Mean max Q | Mean |winding| | Mean direction-sphere arc | Mean |integrated J_parallel| | Mean |J x B| |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 1 | 0 | 39.78 | 0.2144 | 1.833 | 2.121 | 0.08005 |
+| 1 | 0.25 | 16.37 | 0.1264 | 1.051 | 1.172 | 0.04164 |
+| 1 | 1 | 2.568 | 0.03996 | 0.3508 | 0.4004 | 0.01571 |
+| 2 | 0 | 59.57 | 0.3341 | 3.621 | 3.846 | 0.08462 |
+| 2 | 0.25 | 43.33 | 0.2164 | 2.084 | 2.102 | 0.04394 |
+| 2 | 1 | 4.425 | 0.07603 | 0.713 | 0.7996 | 0.01662 |
+| 3 | 0 | 67.05 | 0.4186 | 5.328 | 5.333 | 0.08626 |
+| 3 | 0.25 | 62.07 | 0.2964 | 3.06 | 2.948 | 0.04477 |
+| 3 | 1 | 7.847 | 0.1092 | 1.065 | 1.186 | 0.01694 |
+
+The largest squashing factor occurred for `n3_k1.5_b1.25_s1.25_rho0.25`:
+`Q_max=102.28` with maximum
+finite-length Lyapunov exponent
+`0.048192`.
+
+The largest mean neighbor winding occurred for
+`n3_k1.5_b0.75_s1.25_rho0`:
+`0.74582` turns.
+
+Because the normal field is the same constant on both boundaries, the
+primary `Q` uses the exact determinant ratio `|B_z(start)/B_z(end)|=1`.
+The unconstrained finite-difference `Q` is retained in the runs CSV as a
+resolution diagnostic. At the base grid,
+`45/108` configurations had maximum local
+area-preservation residual at most `0.5`.
+
+## Targeted Resolution Audit
+
+| Configuration | Grid | Mean |winding| | Max Q | Max stretch | Max area residual |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| n2_k1.5_b0.75_s1.25_rho0 | 49 | 0.8197 | 1722 | 40.9 | 517.2 |
+| n3_k1.5_b0.75_s1.25_rho0 | 49 | 0.9985 | 1999 | 44.43 | 640 |
+| n3_k1.5_b1.25_s1.25_rho0.25 | 49 | 0.4372 | 1129 | 33.59 | 155.6 |
+| n3_k1.5_b0.75_s0.75_rho1 | 49 | 0.1666 | 14.97 | 3.86 | 0.04213 |
+
+At the finest audit grid, the area-preservation residual was at most `0.1`
+for `n3_k1.5_b0.75_s0.75_rho1`. These estimates are numerically resolved within the
+declared audit. The residual remained above `0.5` for `n2_k1.5_b0.75_s1.25_rho0`, `n3_k1.5_b0.75_s1.25_rho0`, `n3_k1.5_b1.25_s1.25_rho0.25`.
+For those high-gradient states, winding persists under refinement but `Q`
+and maximum stretch continue to expose finer scales; they are not converged
+point estimates.
+
+## Multiscale Direction/Trajectory Ledger
+
+Trajectory decimation is independent of physical diffusion. Galperin-style
+angular-budget compression is represented by lost spherical tangent arc,
+while braid information is checked by pairwise-winding error.
+
+| Decimation factor | Mean direction arc loss | Max direction arc loss | Max winding error |
+| ---: | ---: | ---: | ---: |
+| 1 | 0 | 0 | 0 |
+| 2 | 0.003574 | 0.1069 | 4.768e-07 |
+| 4 | 0.0168 | 0.5425 | 4.768e-07 |
+| 8 | 0.0677 | 2.425 | 7.153e-07 |
+
+The smallest nontrivial mean winding error was
+`2.589e-10` at
+coarse factor `2`. Across every row,
+the largest winding error was `7.153e-07` turns and
+the largest lost direction-sphere arc was `2.425`
+radians. Thus winding is exceptionally stable here, while aggressive
+decimation can hide substantial local bending.
+
+## Physical Interpretation
+
+- `Q` and finite-length Lyapunov stretching measure sensitivity of the
+  footpoint map, not magnetic reconnection itself.
+- `integrated_parallel_current` is relevant to three-dimensional
+  reconnection, but a reconnection rate would require an electric field and
+  a specified resistivity.
+- `J x B` measures how far these analytic initial fields are from force-free
+  balance. No ideal or magnetofrictional relaxation was performed.
+- Pairwise winding of open, line-tied strands is a geometric statistic, not a
+  closed-knot invariant.
+- Magnetic energy is reported in normalized units and cannot be converted to
+  solar-flare energy without a dimensional calibration.
+
+## Performance
+
+Mean group time was `3.449` seconds. The expensive operation
+is batched RK4 field-line integration followed by current evaluation along
+the trajectories. Only summaries and one selected trajectory bundle are
+transferred to CPU.
+
+## Decision
+
+This branch is suitable for locating parameter regimes with simultaneously
+large winding, large bundle stretching, and tolerable force imbalance.
+The robust finding is a hierarchy: braid cycles increase winding, current,
+and tangent-sphere variation, while free diffusion suppresses all three.
+The largest undiffused winding states require adaptive spatial derivatives
+before quantitative `Q` claims. A subsequent physics branch should select a
+small number of states for magnetofrictional or resistive-MHD evolution
+rather than increasing this static parameter grid indefinitely.

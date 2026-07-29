@@ -1,0 +1,20 @@
+python_executable: C:\Users\anaxe\AppData\Local\Programs\Python\Python312\python.exe
+python_version: 3.12.10
+torch_version: 2.12.0.dev20260408+cu128
+torch_cuda_available: True
+torch_cuda_version: 12.8
+actual_device: cuda
+gpu_name: NVIDIA GeForce RTX 5070 Ti Laptop GPU
+cuda_used: True
+dtype: torch.float32
+smoke: True
+configuration_count: 4
+field_lines_per_config: 25
+steps_per_cycle: 48
+total_field_line_steps: 4800
+peak_cuda_memory_bytes: 33904128
+elapsed_seconds: 0.7107067999968422
+full_resistive_mhd_solved: False
+free_diffusion_subflow_exact: True
+line_tied_boundaries: True
+specular_reflection_used_for_field_lines: False

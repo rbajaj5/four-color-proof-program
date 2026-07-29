@@ -106,6 +106,24 @@ def curve_point_curvatures(curve: Any) -> Any:
     return 4.0 * numerator / denominator
 
 
+def specular_reflection(velocity: Any, normal: Any) -> Any:
+    """Reflect vectors across tangent hyperplanes with unit normals."""
+
+    torch = _torch()
+    if velocity.shape[-1] != 3 or normal.shape[-1] != 3:
+        raise ValueError("velocity and normal must end in dimension 3")
+    normal_norm = torch.linalg.vector_norm(normal, dim=-1, keepdim=True)
+    if bool(torch.any(normal_norm <= torch.finfo(velocity.dtype).eps)):
+        raise ValueError("normal vectors must be nonzero")
+    unit_normal = normal / normal_norm
+    normal_component = torch.sum(
+        velocity * unit_normal,
+        dim=-1,
+        keepdim=True,
+    )
+    return velocity - 2.0 * normal_component * unit_normal
+
+
 def space_form_coupling_force(
     curvature: Any,
     separation: Any,

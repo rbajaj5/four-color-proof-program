@@ -282,6 +282,121 @@ python scripts/check_quasiperiodic_polyhedral_rg_gpu.py
 
 Outputs are written to `results/quasiperiodic_polyhedral_rg/`.
 
+## Line-tied magnetic-braid sweep
+
+The magnetic-braid branch uses the analytic coronal-loop construction of
+Wilmot-Smith, Hornig, and Pontin. A constant vertical field is supplemented
+by alternating, localized toroidal Gaussian rings. Every ring is
+divergence-free, and its curl is evaluated analytically. The CUDA runner
+integrates the lower-to-upper field-line map for
+
+```text
+cycles          in {1, 2, 3}
+twist           in {0.5, 1.0, 1.5}
+guide field     in {0.75, 1.25}
+center offset   in {0.75, 1.25}
+diffusion time  in {0, 0.25, 1}
+```
+
+for 108 configurations. The diffusion parameter is the product `eta t` in
+the exact heat evolution of each Gaussian perturbation. It is a useful
+resistive smoothing subflow, not a solution of the coupled MHD momentum,
+pressure, density, and energy equations.
+
+Three geometric descriptions are kept separate:
+
+1. At each axial slice, distinct strand positions form a point in a
+   configuration-space complement of pair-collision diagonals. Neighbor
+   winding records local motion around those forbidden sets.
+2. The field-line mapping Jacobian records bundle stretching. Its `Q`,
+   singular values, and finite-length Lyapunov exponent are the smooth
+   analogue of Galperin's reflected-wavefront expansion.
+3. The normalized tangent `B/|B|` traces a path on the upper direction
+   sphere. Spherical path length provides an angular budget for coarse
+   graining, analogous to bounding reflection events by total angle.
+
+The resulting direction tubes may look Kakeya-like, but they are a finite,
+constrained family in a line-tied field. They neither contain a segment in
+every direction nor define a Kakeya set. Likewise, magnetic field lines are
+not reflected at billiard boundaries; the exact specular reflection helper
+belongs only to the polyhedral geometry layer.
+
+Because the guide field has the same positive normal component on both
+boundaries, the exact determinant ratio in the standard squashing-factor
+denominator is `|B_z(start)/B_z(end)|=1`. The runner also records the raw
+finite-difference determinant and its area-preservation residual. A targeted
+13x13, 25x25, 49x49 audit shows:
+
+- a diffused control converges in winding, `Q`, and determinant residual;
+- the strongest undiffused winding states retain multiple local turns, but
+  their mapping gradients remain unresolved even at 49x49; and
+- spatial winding is stable under trajectory decimation, whereas the
+  direction-sphere path detects local bending lost at aggressive factors.
+
+Run:
+
+```text
+python scripts/check_magnetic_braid_mhd_gpu.py --smoke
+python scripts/check_magnetic_braid_mhd_gpu.py
+```
+
+The script fails loudly without CUDA unless `--allow-cpu` is supplied
+deliberately. Outputs are written to
+`results/magnetic_braid_mhd_gpu_smoke/` and
+`results/magnetic_braid_mhd_gpu/`.
+
+## Fractional-field curvature maps
+
+Cao and Sheffield's fractional Gaussian forms provide a natural roughness
+axis for the finite-map layer. In two dimensions the scalar field is
+formally
+
+```text
+FGF_s = (-Delta)^(-s/2) W,    H = s - 1,
+```
+
+where `H` controls scaling and regularity. The implemented CUDA experiment
+uses a periodic finite Fourier cutoff, not a pointwise claim about a
+continuum generalized field.
+
+For each lattice square, the sign of
+
+```text
+h00 + h11 - h10 - h01
+```
+
+chooses one diagonal. Adding an exterior vertex joined to the square
+boundary produces a sphere triangulation with `E = 3V - 6`. The standard
+Eulerian-triangulation criterion then makes the chromatic classification
+exact: all degrees even gives chromatic number three, while any odd degree
+forces four. The odd-degree fraction is recorded as a finite
+**Four-color frustration density**.
+
+Across 3,840 maps, smoother fields showed more persistent curvature choices:
+the 17-to-65 majority transport mismatch fell monotonically from `0.3303` at
+`H=0.1` to `0.2059` at `H=0.9`. Neighbor curvature-sign agreement rose at
+the same time. The experiment therefore identifies a useful finite
+multiscale statistic, not a new proof of Four Color or a canonical infinite
+coloring.
+
+Cao and Sheffield also describe divergence-free fractional Gaussian
+1-forms, while their Chern-Simons discussion formally connects
+`(J, curl^(-1) J)` to the Gauss linking integral for divergence-free
+currents. That suggests a later controlled extension: perturb the analytic
+line-tied flux-tube field by a divergence-free fractional 1-form and apply
+the finite curvature-map diagnostic on transverse slices. Colors would
+remain combinatorial certificates, not gauge states.
+
+Run:
+
+```text
+python scripts/check_fractional_field_four_color_gpu.py --smoke
+python scripts/check_fractional_field_four_color_gpu.py
+```
+
+Outputs are written to `results/fractional_field_four_color_gpu_smoke/` and
+`results/fractional_field_four_color_gpu/`.
+
 ## Sources
 
 - K. T. McDonald, *Can the Field Lines of a Permanent Magnet Be Tied in
@@ -302,3 +417,9 @@ Outputs are written to `results/quasiperiodic_polyhedral_rg/`.
   https://pmc.ncbi.nlm.nih.gov/articles/PMC21766/
 - P. Coulton and G. Galperin, *Forces Along Equidistant Particle Paths*,
   Math. Phys. Anal. Geom. 7 (2004), 187-192.
+- A. L. Wilmot-Smith, G. Hornig, and D. I. Pontin, *Magnetic Braiding and
+  Quasi-Separatrix Layers*: https://arxiv.org/abs/0907.3820
+- A. L. Wilmot-Smith, G. Hornig, and D. I. Pontin, *Magnetic Braiding and
+  Parallel Electric Fields*: https://arxiv.org/abs/0810.1415
+- S. Cao and S. Sheffield, *Fractional Gaussian Forms and Gauge Theory: An
+  Overview*: https://arxiv.org/abs/2406.19321

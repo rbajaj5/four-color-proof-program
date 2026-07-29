@@ -1,0 +1,18 @@
+python_executable: C:\Users\anaxe\AppData\Local\Programs\Python\Python312\python.exe
+python_version: 3.12.10
+torch_version: 2.12.0.dev20260408+cu128
+torch_cuda_available: True
+torch_cuda_version: 12.8
+actual_device: cuda
+gpu_name: NVIDIA GeForce RTX 5070 Ti Laptop GPU
+cuda_used: True
+dtype: torch.float32
+smoke: True
+batch_size: 16
+periodic_resolution: 32
+hurst_values: [0.25, 0.75]
+grid_sizes: [9, 17, 33]
+peak_cuda_memory_bytes: 891904
+elapsed_seconds: 0.566701000003377
+continuum_infinite_coloring_constructed: False
+finite_planar_triangulations_certified: True
