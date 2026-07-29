@@ -80,6 +80,25 @@ This is a physically constrained geometry fixture, not a new Maxwell
 solution or new knot discovery. See
 [`MAXWELL_KNOT_FIELD_PROGRAM.md`](MAXWELL_KNOT_FIELD_PROGRAM.md).
 
+The fourth experiment treats a closed curve as a tower of Fourier modes and
+applies a curvature-inspired parameter-space heat flow
+
+```text
+partial_tau gamma = partial_s^2 gamma.
+```
+
+Mode `k` decays as `exp(-tau k^2)`, so fine, high-curvature blocks disappear
+first. The CUDA run follows projection crossings, nonlocal clearance, bending
+energy, and effective mode count for four Bateman core fixtures. It also
+records the elementary exact result that the centered, rescaled flow converges
+to the first surviving harmonic. When that harmonic is a rank-two first mode,
+a nontrivial knot must encounter the non-embedding discriminant at finite RG
+time. A higher first mode instead gives a nonembedded multiple-cover limit;
+that convergence alone does not imply finite-time contact. This is an abstract
+RG/coarse-graining model, not a mechanical string simulation or a new knot
+theorem. See the generated
+[`CURVATURE_RG_KNOT_COLLAPSE_REPORT.md`](results/curvature_rg_knot_collapse/CURVATURE_RG_KNOT_COLLAPSE_REPORT.md).
+
 ## The Missing Lemma
 
 For a link diagram, smoothing choices form a Boolean cube. The
@@ -111,6 +130,7 @@ python -m pip install -e ".[test,experiments]"
 python scripts/check_four_color_penrose_fixtures.py
 python scripts/check_cubic_edge_smoothing_lifts.py
 python scripts/check_maxwell_knot_fields_gpu.py
+python scripts/check_curvature_rg_knot_collapse_gpu.py
 python -m pytest tests -q
 ```
 
@@ -120,6 +140,7 @@ Generated artifacts are written to:
 results/four_color_penrose_program/
 results/cubic_edge_smoothing/
 results/maxwell_knot_fields/
+results/curvature_rg_knot_collapse/
 ```
 
 ## Repository Layout
@@ -158,6 +179,15 @@ tests/test_maxwell_knot_fields.py
 tests/test_goemans_conflict_fixture.py
     Exact 58-versus-60 arithmetic and feasibility tests.
 
+src/curvature_rg_flow.py
+    Fourier heat coarse-graining and scale-free geometric diagnostics.
+
+scripts/check_curvature_rg_knot_collapse_gpu.py
+    CUDA RG-flow runner, crossing diagnostics, plots, and report generator.
+
+tests/test_curvature_rg_flow.py
+    Semigroup, spectral monotonicity, and terminal-harmonic tests.
+
 FOUR_COLOR_KNOT_PROOF_PROGRAM.md
     Mathematical proof-search program and claim boundaries.
 
@@ -172,6 +202,9 @@ results/cubic_edge_smoothing/
 
 results/maxwell_knot_fields/
     CUDA diagnostics, CSVs, audit JSON, report, and 3D figures.
+
+results/curvature_rg_knot_collapse/
+    CUDA flow traces, summary, audit JSON, report, and 3D snapshots.
 ```
 
 ## Evidence Policy
@@ -187,6 +220,8 @@ results/maxwell_knot_fields/
   solutions or new knot types.
 - Four-coloring a diagnostic conflict graph does not certify weighted
   whole-trajectory selection.
+- Heat-flow crossing changes are one-sided diagnostics, not complete knot
+  classifications or topology-preserving simplifications.
 
 ## Primary Sources
 

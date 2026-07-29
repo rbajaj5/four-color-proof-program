@@ -1,0 +1,16 @@
+{
+  "python_executable": "C:\\Users\\anaxe\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+  "python_version": "3.12.10",
+  "torch_version": "2.12.0.dev20260408+cu128",
+  "actual_device": "cuda",
+  "gpu_name": "NVIDIA GeForce RTX 5070 Ti Laptop GPU",
+  "cuda_used": true,
+  "samples": 512,
+  "tau_count": 48,
+  "tau_max": 5.0,
+  "peak_cuda_memory_bytes": 42286080,
+  "elapsed_seconds": 57.09895449999749,
+  "all_nontrivial_projection_falls_detected": true,
+  "new_knot_theorem_claimed": false,
+  "new_maxwell_solution_claimed": false
+}

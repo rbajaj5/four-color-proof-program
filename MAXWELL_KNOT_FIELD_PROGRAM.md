@@ -120,6 +120,43 @@ This is an exact check of an abstract conflict core. It is not a verification
 of the recently reported directed-path counterexample to the
 cost-strengthened Goemans conjecture.
 
+## Curvature RG extension
+
+The sampled Bateman cores also seed an abstract coarse-graining experiment.
+Write a centered periodic curve as
+
+```text
+gamma(s) = sum_k gamma_hat_k exp(i k s).
+```
+
+The heat semigroup evolves it by
+
+```text
+gamma_hat_k(tau) = exp(-tau k^2) gamma_hat_k(0).
+```
+
+For arclength `s`, its generator is the curvature vector
+`partial_s^2 gamma`. This gives the "falling tower" analogy a precise rule:
+blocks at frequency `k` are removed at rate `k^2`. The implementation retains
+the periodic Bateman sampling parameter rather than continuously
+reparametrizing by arclength, so it is a parameter-space heat semigroup, not
+an intrinsic curve-shortening solver.
+
+Let `m` be the first nonzero Fourier mode. After centering and rescaling by
+`exp(m^2 tau)`, the flow converges in every fixed `C^r` norm to its `m`-th
+harmonic. If `m=1` and its coefficient vectors span a plane, the limit is an
+ellipse. If `m>1`, the limit is an `m`-fold covered ellipse and is not
+embedded. In the `m=1`, rank-two case, a nontrivial initial knot cannot remain
+embedded for all finite RG time: eventual `C^1` closeness to the ellipse
+would force it into the unknot isotopy class. For `m>1`, convergence to a
+nonembedded limit alone does not prove finite-time contact.
+
+This last statement is an elementary Fourier consequence, not a claimed new
+theorem. The finite projection crossings in the CUDA run provide only
+one-sided fall certificates: a generic diagram with fewer crossings than the
+known minimal crossing number cannot represent the original knot. See
+`results/curvature_rg_knot_collapse/CURVATURE_RG_KNOT_COLLAPSE_REPORT.md`.
+
 ## Candidate directions
 
 ### MK-C1. Pathology-complete isotopy monitor
@@ -165,6 +202,14 @@ python scripts/check_maxwell_knot_fields_gpu.py --allow-cpu
 ```
 
 Outputs are written to `results/maxwell_knot_fields/`.
+
+The curvature RG extension is run separately:
+
+```text
+python scripts/check_curvature_rg_knot_collapse_gpu.py
+```
+
+Its outputs are written to `results/curvature_rg_knot_collapse/`.
 
 ## Sources
 

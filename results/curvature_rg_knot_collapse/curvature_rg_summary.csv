@@ -1,0 +1,5 @@
+fixture_id,p,q,first_nonzero_mode,leading_mode_rank,minimal_crossing_number,fall_tau_interval,fall_detected,minimum_clearance,initial_effective_mode_count,final_effective_mode_count,initial_spectral_bending_energy,final_spectral_bending_energy
+hopf_core_unknot,1,1,1,2,0,not_applicable,False,2.33958728518519,16,1,11.313708498984777,6.23151718853804e-05
+trefoil_2_3,2,3,1,2,3,"(0.475833, 0.602014]",True,0.27200152548313894,40,1,322.74861218395176,5.766547160917102e-06
+cinquefoil_2_5,2,5,2,2,5,"(1.95148, 2.46897]",True,0.0,34,1,811.6861462412685,6.79736680846654e-17
+torus_knot_3_4,3,4,1,2,8,"(0.116023, 0.14679]",True,0.8220044797828538,43,1,1361.2390495427323,6.3105108739982875e-06
