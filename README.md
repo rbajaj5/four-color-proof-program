@@ -99,6 +99,14 @@ RG/coarse-graining model, not a mechanical string simulation or a new knot
 theorem. See the generated
 [`CURVATURE_RG_KNOT_COLLAPSE_REPORT.md`](results/curvature_rg_knot_collapse/CURVATURE_RG_KNOT_COLLAPSE_REPORT.md).
 
+A second CUDA pass resolves that flow into declared wavelength bands:
+macroscopic modes `1-2`, mesoscopic modes `3-8`, and microscopic modes `9+`.
+It distinguishes absolute energy depletion from relative structural share.
+The resulting cascade shows why microscopic roughness can disappear long
+before the knot diagram changes, and why very small higher modes can remain
+topologically decisive near a multiply covered limiting curve. See
+[`CURVATURE_RG_MULTISCALE_JENGA_REPORT.md`](results/curvature_rg_knot_collapse/CURVATURE_RG_MULTISCALE_JENGA_REPORT.md).
+
 ## The Missing Lemma
 
 For a link diagram, smoothing choices form a Boolean cube. The
@@ -131,6 +139,7 @@ python scripts/check_four_color_penrose_fixtures.py
 python scripts/check_cubic_edge_smoothing_lifts.py
 python scripts/check_maxwell_knot_fields_gpu.py
 python scripts/check_curvature_rg_knot_collapse_gpu.py
+python scripts/check_curvature_rg_multiscale_gpu.py
 python -m pytest tests -q
 ```
 
@@ -185,8 +194,11 @@ src/curvature_rg_flow.py
 scripts/check_curvature_rg_knot_collapse_gpu.py
     CUDA RG-flow runner, crossing diagnostics, plots, and report generator.
 
+scripts/check_curvature_rg_multiscale_gpu.py
+    CUDA macro/meso/micro spectral ledger and cascade visualization.
+
 tests/test_curvature_rg_flow.py
-    Semigroup, spectral monotonicity, and terminal-harmonic tests.
+    Semigroup, spectral partition, monotonicity, and terminal-harmonic tests.
 
 FOUR_COLOR_KNOT_PROOF_PROGRAM.md
     Mathematical proof-search program and claim boundaries.
@@ -204,7 +216,7 @@ results/maxwell_knot_fields/
     CUDA diagnostics, CSVs, audit JSON, report, and 3D figures.
 
 results/curvature_rg_knot_collapse/
-    CUDA flow traces, summary, audit JSON, report, and 3D snapshots.
+    CUDA flow and scale traces, summaries, audits, reports, and 3D snapshots.
 ```
 
 ## Evidence Policy

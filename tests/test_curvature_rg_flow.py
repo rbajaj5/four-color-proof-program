@@ -10,6 +10,7 @@ from src.curvature_rg_flow import (
     first_nonzero_mode,
     leading_mode_rank,
     periodic_heat_coarse_grain,
+    spectral_scale_bands,
     spectral_energies,
 )
 from src.maxwell_knot_fields import magnetic_core_curve
@@ -51,3 +52,36 @@ def test_leading_modes_distinguish_ellipse_and_multiple_cover_limits() -> None:
     assert first_nonzero_mode(cinquefoil) == 2
     assert leading_mode_rank(trefoil) == 2
     assert leading_mode_rank(cinquefoil) == 2
+
+
+def test_scale_bands_partition_derivative_energies() -> None:
+    curve = magnetic_core_curve(3, 4, 512, dtype=torch.float64)
+    total = spectral_energies(curve)
+    bands = spectral_scale_bands(curve)
+    assert [band["scale"] for band in bands] == [
+        "macroscopic",
+        "mesoscopic",
+        "microscopic",
+    ]
+    assert sum(float(band["dirichlet_energy"]) for band in bands) == pytest.approx(
+        total["spectral_dirichlet_energy"],
+        rel=1e-12,
+    )
+    assert sum(float(band["bending_energy"]) for band in bands) == pytest.approx(
+        total["spectral_bending_energy"],
+        rel=1e-12,
+    )
+
+
+def test_microscopic_band_decays_before_macroscopic_band() -> None:
+    curve = magnetic_core_curve(2, 3, 512, dtype=torch.float64)
+    initial = {row["scale"]: row for row in spectral_scale_bands(curve)}
+    later_curve = periodic_heat_coarse_grain(curve, 0.05)
+    later = {row["scale"]: row for row in spectral_scale_bands(later_curve)}
+    macro_fraction = float(later["macroscopic"]["bending_energy"]) / float(
+        initial["macroscopic"]["bending_energy"]
+    )
+    micro_fraction = float(later["microscopic"]["bending_energy"]) / float(
+        initial["microscopic"]["bending_energy"]
+    )
+    assert micro_fraction < macro_fraction

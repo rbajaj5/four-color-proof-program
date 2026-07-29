@@ -11,6 +11,13 @@ from __future__ import annotations
 from typing import Any
 
 
+DEFAULT_SCALE_BANDS = (
+    ("macroscopic", 1, 2),
+    ("mesoscopic", 3, 8),
+    ("microscopic", 9, None),
+)
+
+
 def _torch() -> Any:
     try:
         import torch
@@ -133,6 +140,63 @@ def spectral_energies(curve: Any) -> dict[str, float]:
         "spectral_dirichlet_energy": float(dirichlet.real.item()),
         "spectral_bending_energy": float(bending.real.item()),
     }
+
+
+def spectral_scale_bands(
+    curve: Any,
+    bands: tuple[tuple[str, int, int | None], ...] = DEFAULT_SCALE_BANDS,
+) -> list[dict[str, float | int | str]]:
+    """Partition spectral power and derivative energies by wavelength scale."""
+
+    torch = _torch()
+    unique = _unique_closed_points(curve)
+    centered = unique - unique.mean(dim=0)
+    coefficients = torch.fft.fft(centered, dim=0) / unique.shape[0]
+    frequencies = torch.fft.fftfreq(
+        unique.shape[0],
+        d=1.0 / unique.shape[0],
+        device=unique.device,
+        dtype=unique.dtype,
+    )
+    absolute_frequency = frequencies.abs()
+    power = torch.sum(coefficients.abs().square(), dim=-1)
+    rows: list[dict[str, float | int | str]] = []
+    previous_maximum = 0
+    for name, minimum_mode, maximum_mode in bands:
+        if not name:
+            raise ValueError("scale-band names must be nonempty")
+        if minimum_mode < 1:
+            raise ValueError("scale bands must exclude the centroid mode")
+        if minimum_mode <= previous_maximum:
+            raise ValueError("scale bands must be strictly ordered and disjoint")
+        if maximum_mode is not None and maximum_mode < minimum_mode:
+            raise ValueError("scale-band maximum must not precede its minimum")
+        mask = absolute_frequency >= minimum_mode
+        if maximum_mode is not None:
+            mask &= absolute_frequency <= maximum_mode
+            previous_maximum = maximum_mode
+        else:
+            previous_maximum = unique.shape[0]
+        band_power = torch.sum(power[mask])
+        dirichlet = torch.sum(
+            frequencies[mask].square() * power[mask]
+        )
+        bending = torch.sum(
+            frequencies[mask].pow(4) * power[mask]
+        )
+        rows.append(
+            {
+                "scale": name,
+                "minimum_mode": minimum_mode,
+                "maximum_mode": (
+                    maximum_mode if maximum_mode is not None else -1
+                ),
+                "spectral_power": float(band_power.real.item()),
+                "dirichlet_energy": float(dirichlet.real.item()),
+                "bending_energy": float(bending.real.item()),
+            }
+        )
+    return rows
 
 
 def geometric_curve_metrics(curve: Any) -> dict[str, float]:
