@@ -102,6 +102,15 @@ The component-count function supplies a natural height, but component count
 alone cannot distinguish a 3-colorable component graph from one requiring
 four colors.
 
+The CUDA smoothing-landscape census makes this obstruction explicit. Odd
+wheels show a clean finite-family pattern: through `W14`, every nonzero
+strict maximum has component graph `K3`, and their count is
+`(4^k-1)/3` for `W_(2k+2)`. However, 25 of 27 small 3-connected,
+4-chromatic planar atlas graphs have a nonzero strict maximum whose component
+graph is not 3-colorable. Thus "discard the zero maximum" is not a universal
+certificate. The wheel formula remains a conjecture with a coloring-orbit
+proof sketch, not a Four Color lemma.
+
 ### FC-C3. Positive state-sum decomposition
 
 Rewrite `P(3)`, the Penrose-Kauffman evaluation, as a sum of manifestly
@@ -165,12 +174,14 @@ More successful finite enumerations alone do not count as a better proof.
 ```text
 python scripts/check_four_color_penrose_fixtures.py
 python scripts/check_cubic_edge_smoothing_lifts.py
+py -3.12 scripts/check_penrose_smoothing_landscape_gpu.py
 python -m pytest tests -q
 ```
 
 Outputs are written to `results/four_color_penrose_program/` and
-`results/cubic_edge_smoothing/`. The separate Maxwell runner writes to
-`results/maxwell_knot_fields/`.
+`results/cubic_edge_smoothing/`. The CUDA landscape census writes to
+`results/penrose_smoothing_landscape_gpu/`. The separate Maxwell runner
+writes to `results/maxwell_knot_fields/`.
 
 ## Status
 

@@ -65,6 +65,13 @@ implies colorable parent." The exact replacement-edge criterion is recorded:
 a child coloring lifts precisely when its two replacement edges are assigned
 different colors.
 
+The CUDA smoothing-landscape experiment exhaustively evaluates the mod-2
+Laplacian nullity on Boolean smoothing cubes. It reconstructs only strict
+local maxima on the CPU and tests their component graphs exactly. Odd wheels
+through `W14` satisfy a closed-form pattern, while small planar-atlas controls
+falsify the tempting universal rule that every nonzero maximum should be
+3-colorable. This is a bounded structural diagnostic, not a new proof.
+
 The third experiment uses exact Bateman potentials to sample electromagnetic
 torus-knot core lines on CUDA. It:
 
@@ -224,6 +231,7 @@ Python 3.11 or newer is recommended.
 python -m pip install -e ".[test,experiments]"
 python scripts/check_four_color_penrose_fixtures.py
 python scripts/check_cubic_edge_smoothing_lifts.py
+py -3.12 scripts/check_penrose_smoothing_landscape_gpu.py
 python scripts/check_maxwell_knot_fields_gpu.py
 python scripts/check_curvature_rg_knot_collapse_gpu.py
 python scripts/check_curvature_rg_multiscale_gpu.py
@@ -243,6 +251,7 @@ Generated artifacts are written to:
 ```text
 results/four_color_penrose_program/
 results/cubic_edge_smoothing/
+results/penrose_smoothing_landscape_gpu/
 results/maxwell_knot_fields/
 results/curvature_rg_knot_collapse/
 results/quasiperiodic_polyhedral_rg/
@@ -275,6 +284,15 @@ scripts/check_cubic_edge_smoothing_lifts.py
 
 tests/test_cubic_edge_smoothing.py
     Exact partition and nonliftability tests.
+
+src/penrose_smoothing_landscape.py
+    Exact plane-state reconstruction and bounded coloring checks.
+
+scripts/check_penrose_smoothing_landscape_gpu.py
+    Exhaustive CUDA nullity and strict-local-maximum census.
+
+tests/test_penrose_smoothing_landscape.py
+    Exact state/nullity agreement and counterexample controls.
 
 src/maxwell_knot_fields.py
     Bateman potentials, magnetic core curves, and Maxwell residuals.
@@ -365,6 +383,9 @@ results/four_color_penrose_program/
 
 results/cubic_edge_smoothing/
     Committed edge-level, graph-level, audit, and report artifacts.
+
+results/penrose_smoothing_landscape_gpu/
+    CUDA audit, exhaustive maxima, fixture summaries, timing, and report.
 
 results/maxwell_knot_fields/
     CUDA diagnostics, CSVs, audit JSON, report, and 3D figures.
