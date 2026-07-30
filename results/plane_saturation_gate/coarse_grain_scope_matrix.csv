@@ -1,0 +1,7 @@
+object,status,reason
+simple_planar_cell_adjacency_graph,compatible_after_saturation_check,The host is a finite simple planar graph; twin profiling and plane-saturated subgraph certification are meaningful.
+simple_four_regular_projection_graph,theorem_1_3_hypothesis_automatic,"Minimum degree four excludes degree-1 and degree-2 twins, provided the projection graph is simple."
+knot_projection_multigraph,blocked_without_extension,Generic knot projections can have parallel edges or loops; the simple-graph theorem cannot be imported silently.
+simplified_underlying_projection_graph,blocked_without_preservation_lemma,Deleting loops or merging parallel edges can change both the host subgraph relation and saturation.
+region_dual_graph,separate_observable,"Four-colorability concerns a coloring certificate, whereas plane saturation concerns maximality of a partial embedding."
+curvature_coarse_grained_graph,diagnostic_only,"Track edge ratio, skeleton components, isolates, and low-degree twin classes at every scale; no topological preservation follows from those statistics alone."

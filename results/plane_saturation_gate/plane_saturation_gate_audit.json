@@ -1,0 +1,24 @@
+{
+  "source": {
+    "title": "Saturated Partial Embeddings of Planar Graphs",
+    "authors": [
+      "Alexander Clifton",
+      "Nika Salia"
+    ],
+    "arxiv": "2403.02458",
+    "version_reviewed": "v1",
+    "submitted": "2024-03-04",
+    "provided_text_sha256": "891d3b7dd3684ed30463a187a2d1a1f63c1688b0351194c7d328dd0566b56898"
+  },
+  "construction_one_exact_count_gate": true,
+  "r2_r3_compensation_grid_gate": true,
+  "compensation_pair_count": 4224,
+  "theorem_1_3_bound": "strictly_greater_than_1/16",
+  "conjecture_4_2_bound": "strictly_greater_than_1/9",
+  "conjecture_promoted_to_theorem": false,
+  "four_color_improvement_claimed": false,
+  "knot_invariant_claimed": false,
+  "simulation_used": false,
+  "gpu_used": false,
+  "artifact_role": "exact transcription gate and coarse-graining scope diagnostic"
+}

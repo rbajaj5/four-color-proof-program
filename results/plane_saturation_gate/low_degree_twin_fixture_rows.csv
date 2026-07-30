@@ -1,0 +1,6 @@
+fixture_id,vertex_count,edge_count,maximum_degree_1_twin_class,maximum_degree_2_twin_class,no_degree_1_or_2_twins,fully_twin_free,simple_planar_fixture,theorem_1_3_low_degree_twin_hypothesis,certified_strict_lower_bound
+cycle_C7,7,7,0,1,True,True,True,True,1/16
+star_K1_7,8,7,7,0,False,False,True,False,not_from_theorem_1_3
+complete_bipartite_K2_6,8,12,0,6,False,False,True,False,not_from_theorem_1_3
+complete_graph_K4,4,6,0,0,True,True,True,True,1/16
+octahedral_graph,6,12,0,0,True,False,True,True,1/16

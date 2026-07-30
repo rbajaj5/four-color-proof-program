@@ -1,0 +1,6 @@
+m,vertices_G,edges_G,vertices_H,edges_H,edge_ratio,distance_above_1_16,published_upper_bound,claim_2_1_inequality_holds,same_vertex_count
+7,57,120,57,41,41/120,67/240,55/112,True,True
+16,120,264,120,50,25/132,67/528,1/4,True,True
+64,456,1032,456,98,49/516,67/2064,7/64,True,True
+256,1800,4104,1800,290,145/2052,67/8208,19/256,True,True
+1024,7176,16392,7176,1058,529/8196,67/32784,67/1024,True,True
