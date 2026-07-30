@@ -1,0 +1,11 @@
+{
+  "cuda_used": true,
+  "largest_board_size": 6,
+  "total_states": 2131018,
+  "all_states_processed": true,
+  "no_both_winners": true,
+  "no_neither_winners": true,
+  "majority_reduction_preserves_y": true,
+  "new_hex_theorem": false,
+  "three_dimensional_extension": false
+}
