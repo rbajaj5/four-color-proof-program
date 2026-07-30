@@ -97,6 +97,20 @@ established results. See
 [`HOPF_FIBRATION_SOURCE_GATE_REPORT.md`](results/hopf_fibration_gate_gpu/HOPF_FIBRATION_SOURCE_GATE_REPORT.md)
 and [`NIETTU_HOPF_SOURCE_AUDIT.md`](notes/NIETTU_HOPF_SOURCE_AUDIT.md).
 
+The follow-on Hopf-to-Hex experiment pulls those validated projective
+coordinates back through the Bateman map, samples randomly oriented planar
+windows, and thresholds each Hopf-map component into a completed Hex board.
+Random common `U(1)` phase rotations provide a gauge control: both the
+projective field and every thresholded board must remain unchanged. This
+tests a finite planar connectivity signature of Hopf texture without
+claiming that a slice recovers three-dimensional knot type. See
+[`HOPF_HEX_SLICE_GPU_REPORT.md`](results/hopf_hex_slices_gpu/HOPF_HEX_SLICE_GPU_REPORT.md).
+The associated
+[`KAN model-selection audit`](notes/KAN_MODEL_SELECTION_AUDIT.md) explains
+why no learned surrogate is used for these exact and one-dimensional
+observables, and defines a compute-matched gate for any later
+symbolic-regression use.
+
 The fourth experiment treats a closed curve as a tower of Fourier modes and
 applies a curvature-inspired parameter-space heat flow
 
@@ -495,6 +509,9 @@ results/four_color_special_case_dictionary/
   https://thomas.math.gatech.edu/FC/ftpinfo.html
 - Zamir, *k-Coloring is Faster than Computing the Chromatic Number*:
   https://arxiv.org/abs/2607.25973
+- Hou, Ji, Zhang, and Stefanidis, *Kolmogorov-Arnold Networks: A Critical
+  Assessment of Claims, Performance, and Practical Viability*:
+  https://arxiv.org/abs/2407.11075
 - Kedia et al., *Tying knots in light fields*:
   https://arxiv.org/abs/1302.0342
 - McDonald, *Can the Field Lines of a Permanent Magnet Be Tied in Knots?*:
