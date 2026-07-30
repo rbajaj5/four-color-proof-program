@@ -123,6 +123,19 @@ preserving the existence of a colorable state. See
 and the
 [`source audit`](notes/JAFFE_LIU_PICTURE_LANGUAGE_SOURCE_AUDIT.md).
 
+A diagram-level continuation models the Jaffe-Liu quarter-turn by the exact
+Walsh transform on the Boolean smoothing cube. It proves directly that
+`2^(r nullity)` is a positive-definite translation kernel for every
+nonnegative integer `r`, while finite controls show that `3^nullity` and the
+3-colorable-state indicator need not be positive. A 470-graph connected
+planar-atlas census records the finite boundary. Strict smoothing maxima are
+also identified exactly with strict Nash equilibria of a common-payoff
+bit-flip game; this is not a Prisoner's Dilemma, and equilibrium does not
+guarantee colorability. See
+[`PICTURE_FOURIER_SMOOTHING_REPORT.md`](results/picture_fourier_smoothing/PICTURE_FOURIER_SMOOTHING_REPORT.md)
+and the
+[`diagram analysis`](notes/JAFFE_LIU_DIAGRAM_ANALYSIS.md).
+
 The fourth experiment treats a closed curve as a tower of Fourier modes and
 applies a curvature-inspired parameter-space heat flow
 
@@ -284,6 +297,7 @@ python scripts/check_four_color_penrose_fixtures.py
 python scripts/check_cubic_edge_smoothing_lifts.py
 py -3.12 scripts/check_penrose_smoothing_landscape_gpu.py
 py -3.12 scripts/check_picture_language_reflection.py
+py -3.12 scripts/check_picture_fourier_smoothing.py
 python scripts/check_maxwell_knot_fields_gpu.py
 python scripts/check_curvature_rg_knot_collapse_gpu.py
 python scripts/check_curvature_rg_multiscale_gpu.py

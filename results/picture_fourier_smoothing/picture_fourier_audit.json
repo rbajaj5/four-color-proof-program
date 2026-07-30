@@ -1,0 +1,11 @@
+{
+  "connected_planar_atlas_graphs_tested": 470,
+  "maximum_edges": 10,
+  "two_to_nullity_indefinite_count": 0,
+  "three_to_nullity_indefinite_count": 97,
+  "strict_maximum_indicator_indefinite_count": 139,
+  "strict_nash_equals_strict_local_maximum_all_fixtures": true,
+  "prisoners_dilemma_claimed": false,
+  "four_color_proof_claimed": false,
+  "literature_novelty_claimed": false
+}

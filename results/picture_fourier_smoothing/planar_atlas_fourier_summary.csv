@@ -1,0 +1,4 @@
+observable,graphs_tested,psd_count,indefinite_count,first_indefinite_atlas_index
+2^nullity,470,470,0,
+3^nullity,470,373,97,48
+strict_maximum_indicator,470,331,139,44
