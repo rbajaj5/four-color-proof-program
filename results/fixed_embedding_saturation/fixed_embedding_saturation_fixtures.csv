@@ -1,0 +1,4 @@
+fixture_id,host_vertex_count,host_edge_count,retained_edge_count,edge_ratio_numerator,edge_ratio_denominator,face_count,euler_characteristic,missing_host_edges,cofacial_missing_host_edges,embedding_blocked_host_edges,fixed_labeled_edge_saturated,clifton_salia_plane_saturation_certified,expected_fixed_labeled_edge_saturated,matches_expected
+separator_blocked_edge,5,6,5,5,6,2,2,3-4,,3-4,True,False,True,True
+separator_cofacial_edge,5,6,5,5,6,2,2,0-4,0-4,,False,False,False,True
+complete_triangle_control,3,3,3,3,3,2,2,,,,True,False,True,True

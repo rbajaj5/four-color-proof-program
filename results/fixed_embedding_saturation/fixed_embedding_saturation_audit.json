@@ -1,0 +1,13 @@
+{
+  "fixture_count": 3,
+  "all_fixtures_match_expected": true,
+  "checker_scope": "connected spanning simple subgraph, fixed labels, fixed sphere rotation system, existing-vertex edge additions only",
+  "clifton_salia_unlabeled_saturation_implemented": false,
+  "new_vertex_additions_implemented": false,
+  "disconnected_component_nesting_implemented": false,
+  "multigraphs_implemented": false,
+  "four_color_result_inferred": false,
+  "knot_result_inferred": false,
+  "simulation_used": false,
+  "gpu_used": false
+}
