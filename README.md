@@ -170,6 +170,21 @@ and observed mean agreement was below `0.003`. At interior vertices, the
 degree parity is exactly the XOR of the four surrounding diagonal choices,
 or equivalently a local `Z2` curvature defect.
 
+The Hex/Y branch adds topology-preserving planar connectivity observables.
+An exhaustive CUDA census verifies the Karlin-Peres triangular-majority
+reduction through all 2,097,152 side-six Y boards. A separate rhombic Hex
+census enumerates all 33,554,432 side-five boards and records the exact
+crossing reliability polynomial. Its derivative at `p=1/2` is the expected
+pivotal-cell count under independent coloring. Larger-board sampling then
+compares i.i.d. cells with thresholded fractional-Gaussian fields. On the
+`7 x 7` board, increasing local neighbor agreement from approximately `0.50`
+to `0.73` broadens the 25-to-75 percent crossing window from `0.1601` to
+`0.2513`. These are finite planar connectivity diagnostics, not new Hex
+theorems or three-dimensional knot certificates. See
+[`HEX_CROSSING_GPU_REPORT.md`](results/hex_crossing_gpu/HEX_CROSSING_GPU_REPORT.md)
+and
+[`HEX_CORRELATED_FIELD_GPU_REPORT.md`](results/hex_correlated_fields_gpu/HEX_CORRELATED_FIELD_GPU_REPORT.md).
+
 The magnetic-knot bridge applies that parity construction to scalar
 potentials deposited from the curvature of heat-coarse-grained Bateman
 magnetic core knots. Its 432-map CUDA sweep covers the trefoil, cinquefoil,

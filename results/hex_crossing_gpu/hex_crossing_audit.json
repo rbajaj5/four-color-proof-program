@@ -1,0 +1,15 @@
+{
+  "cuda_used": true,
+  "largest_exact_size": 5,
+  "exact_states_total": 33620498,
+  "exactly_one_winner_all_exact_states": true,
+  "half_probability_is_one_half": true,
+  "coefficient_duality": true,
+  "monte_carlo_both_or_neither": 0,
+  "finite_size_fit": {
+    "intercept": -0.047527240843885814,
+    "finite_size_exponent": 0.6511393456001642,
+    "residual_sum_squares": 1.4436183680043613e-05
+  },
+  "new_hex_theorem": false
+}
