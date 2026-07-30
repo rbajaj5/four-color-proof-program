@@ -1,0 +1,13 @@
+{
+  "pairing_gram_rows": 10,
+  "maximum_pair_count": 5,
+  "maximum_catalan_dimension": 42,
+  "all_reflection_involutions_passed": true,
+  "all_feature_factorizations_exact": true,
+  "all_gram_matrices_positive_definite_numerically": true,
+  "minimum_observed_eigenvalue": 0.10302863730638634,
+  "penrose_reflection_doubles_nonnegative": true,
+  "negative_mixed_gluing_observed": true,
+  "four_color_proof_claimed": false,
+  "literature_novelty_claimed": false
+}

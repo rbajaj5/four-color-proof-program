@@ -111,6 +111,18 @@ why no learned surrogate is used for these exact and one-dimensional
 observables, and defines a compute-matched gate for any later
 symbolic-regression use.
 
+The Jaffe-Liu picture-language gate makes reflection and gluing explicit for
+the smoothing/Penrose interface. Noncrossing pairing kernels receive an exact
+color-feature Gram factorization, while signed Penrose half-pictures verify
+that reflected doubles are sums of squares. An orientation-reversed mixed
+tripod evaluates to `-6`, retaining the obstruction that arbitrary gluing is
+not positive. This identifies a precise proof obligation rather than a new
+Four Color result: a useful reduction must enter a reflected-double cone while
+preserving the existence of a colorable state. See
+[`PICTURE_LANGUAGE_REFLECTION_REPORT.md`](results/picture_language_reflection/PICTURE_LANGUAGE_REFLECTION_REPORT.md)
+and the
+[`source audit`](notes/JAFFE_LIU_PICTURE_LANGUAGE_SOURCE_AUDIT.md).
+
 The fourth experiment treats a closed curve as a tower of Fourier modes and
 applies a curvature-inspired parameter-space heat flow
 
@@ -271,6 +283,7 @@ python -m pip install -e ".[test,experiments]"
 python scripts/check_four_color_penrose_fixtures.py
 python scripts/check_cubic_edge_smoothing_lifts.py
 py -3.12 scripts/check_penrose_smoothing_landscape_gpu.py
+py -3.12 scripts/check_picture_language_reflection.py
 python scripts/check_maxwell_knot_fields_gpu.py
 python scripts/check_curvature_rg_knot_collapse_gpu.py
 python scripts/check_curvature_rg_multiscale_gpu.py
@@ -512,6 +525,8 @@ results/four_color_special_case_dictionary/
 - Hou, Ji, Zhang, and Stefanidis, *Kolmogorov-Arnold Networks: A Critical
   Assessment of Claims, Performance, and Practical Viability*:
   https://arxiv.org/abs/2407.11075
+- Jaffe and Liu, *A Mathematical Picture Language Program*:
+  https://doi.org/10.1073/pnas.1710707114
 - Kedia et al., *Tying knots in light fields*:
   https://arxiv.org/abs/1302.0342
 - McDonald, *Can the Field Lines of a Permanent Magnet Be Tied in Knots?*:
