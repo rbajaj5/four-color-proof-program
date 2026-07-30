@@ -1,0 +1,12 @@
+{
+  "cuda_used": true,
+  "samples_total": 1500000,
+  "projective_identities_pass": true,
+  "chern_number_pass": true,
+  "fiber_linking_pass": true,
+  "chern_number_tolerance": 1e-08,
+  "fiber_linking_tolerance": 1e-05,
+  "imports_unification_claims": false,
+  "imports_particle_predictions": false,
+  "source_peer_reviewed": false
+}

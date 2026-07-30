@@ -87,6 +87,16 @@ This is a physically constrained geometry fixture, not a new Maxwell
 solution or new knot discovery. See
 [`MAXWELL_KNOT_FIELD_PROGRAM.md`](MAXWELL_KNOT_FIELD_PROGRAM.md).
 
+A source-gating companion isolates the classical complex Hopf-fibration
+layer from a recent non-peer-reviewed gauge-gravity proposal. CUDA checks
+rank-one projectors on `CP^1`, `CP^2`, and `CP^4`, common-`U(1)` phase
+invariance, the projective distance identity, the first Chern number of
+`S^3 -> CP^1`, and unit linking of distinct Hopf fibers. The proposal's
+unification and particle-spectrum claims are recorded but not imported as
+established results. See
+[`HOPF_FIBRATION_SOURCE_GATE_REPORT.md`](results/hopf_fibration_gate_gpu/HOPF_FIBRATION_SOURCE_GATE_REPORT.md)
+and [`NIETTU_HOPF_SOURCE_AUDIT.md`](notes/NIETTU_HOPF_SOURCE_AUDIT.md).
+
 The fourth experiment treats a closed curve as a tower of Fourier modes and
 applies a curvature-inspired parameter-space heat flow
 
