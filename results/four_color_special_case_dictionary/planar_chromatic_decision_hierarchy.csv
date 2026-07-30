@@ -1,0 +1,6 @@
+stage,condition,outcome,method,zamir_needed
+1,no edges,chi=1,direct inspection,False
+2,has edges and is bipartite,chi=2,BFS/DFS odd-cycle test,False
+3,triangle-free and non-bipartite,chi=3,Groetzsch upper bound plus odd-cycle lower bound,False
+4,sphere triangulation,chi=3 iff all degrees are even; otherwise chi=4,Heawood parity criterion plus Four Color,False
+5,remaining planar graph,chi=3 if 3-colorable; otherwise chi=4,fixed 3-color decision plus Four Color; Zamir gives a generic randomized sub-2^n route,True

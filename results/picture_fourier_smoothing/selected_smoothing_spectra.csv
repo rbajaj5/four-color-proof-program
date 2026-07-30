@@ -1,0 +1,17 @@
+fixture,vertex_count,edge_count,observable,state_count,spectrum_minimum,spectrum_maximum,negative_coefficient_count,zero_coefficient_count,translation_kernel_psd
+K4,4,6,2^nullity,64,0,240,0,35,True
+K4,4,6,3^nullity,64,6,606,0,0,True
+K4,4,6,strict_maximum_indicator,64,0,2,0,32,True
+K4,4,6,3colorable_indicator,64,-1,1,32,0,False
+K4,4,6,colorable_strict_indicator,64,-1,1,32,0,False
+graph_atlas_44,5,6,2^nullity,64,0,408,0,30,True
+graph_atlas_44,5,6,3^nullity,64,24,1512,0,0,True
+graph_atlas_44,5,6,strict_maximum_indicator,64,-1,5,24,0,False
+graph_atlas_48,5,7,2^nullity,128,0,656,0,68,True
+graph_atlas_48,5,7,3^nullity,128,-6,2154,2,0,False
+graph_atlas_48,5,7,strict_maximum_indicator,128,-2,4,16,48,False
+graph_atlas_51,5,9,2^nullity,512,0,2112,0,409,True
+graph_atlas_51,5,9,3^nullity,512,-30,5826,24,0,False
+graph_atlas_51,5,9,strict_maximum_indicator,512,0,4,0,384,True
+graph_atlas_51,5,9,3colorable_indicator,512,-1,1,256,0,False
+graph_atlas_51,5,9,colorable_strict_indicator,512,-1,1,256,0,False

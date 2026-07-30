@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
+import math
 from typing import Any
 
 
@@ -109,6 +110,99 @@ def mixed_curvature_diagonals(window: Any) -> Any:
         - window[:, :-1, 1:]
     )
     return mixed_curvature >= 0
+
+
+def interior_parity_defects(diagonals: Any) -> Any:
+    """Return odd-degree indicators at interior grid vertices.
+
+    The four cells surrounding an interior vertex contribute one diagonal
+    endpoint each. The grid contributes degree four, so the degree parity is
+    exactly the XOR of the four diagonal choices.
+    """
+
+    if diagonals.ndim != 3 or diagonals.shape[-2] != diagonals.shape[-1]:
+        raise ValueError("diagonals must have shape [batch, n-1, n-1]")
+    if diagonals.shape[-1] < 2:
+        raise ValueError("at least two cells per axis are required")
+    return (
+        diagonals[:, :-1, :-1]
+        ^ diagonals[:, :-1, 1:]
+        ^ diagonals[:, 1:, :-1]
+        ^ diagonals[:, 1:, 1:]
+    )
+
+
+def interior_four_spin_correlation(diagonals: Any) -> Any:
+    """Return the four-spin correlation controlling interior parity defects."""
+
+    torch = _torch()
+    defects = interior_parity_defects(diagonals)
+    return (1.0 - 2.0 * defects.to(torch.float64)).mean(dim=(1, 2))
+
+
+def mixed_curvature_neighbor_prediction(
+    resolution: int,
+    hurst: float,
+    stride: int,
+    *,
+    device: Any = None,
+    dtype: Any = None,
+) -> dict[str, float]:
+    """Predict neighbor sign agreement from the finite spectral covariance.
+
+    Mixed differences of a cutoff fractional Gaussian surface are centered
+    jointly Gaussian. If neighboring values have correlation ``rho``, the
+    Gaussian arcsine identity gives
+
+    ``P(sign X = sign Y) = 1/2 + asin(rho)/pi``.
+    """
+
+    torch = _torch()
+    if resolution < 8:
+        raise ValueError("resolution must be at least 8")
+    if not 0.0 < hurst < 1.0:
+        raise ValueError("hurst must lie strictly between zero and one")
+    if stride < 1 or resolution % stride != 0:
+        raise ValueError("stride must be a positive divisor of resolution")
+    if dtype is None:
+        dtype = torch.float64
+    frequencies = torch.fft.fftfreq(
+        resolution,
+        d=1.0 / resolution,
+        device=device,
+        dtype=dtype,
+    )
+    first, second = torch.meshgrid(frequencies, frequencies, indexing="ij")
+    radius = torch.sqrt(first.square() + second.square())
+    spectral_density = torch.where(
+        radius > 0,
+        radius.pow(-2.0 * (hurst + 1.0)),
+        torch.zeros_like(radius),
+    )
+    first_phase = 2.0 * torch.pi * first * stride / resolution
+    second_phase = 2.0 * torch.pi * second * stride / resolution
+    mixed_filter_power = (
+        16.0
+        * torch.sin(0.5 * first_phase).square()
+        * torch.sin(0.5 * second_phase).square()
+    )
+    filtered_power = spectral_density * mixed_filter_power
+    variance = filtered_power.sum()
+    if float(variance.item()) <= 0.0:
+        raise ValueError("mixed-curvature variance vanished")
+    horizontal = (
+        filtered_power * torch.cos(second_phase)
+    ).sum() / variance
+    vertical = (
+        filtered_power * torch.cos(first_phase)
+    ).sum() / variance
+    correlation = 0.5 * (horizontal + vertical)
+    correlation = correlation.clamp(-1.0, 1.0)
+    agreement = 0.5 + torch.asin(correlation) / math.pi
+    return {
+        "neighbor_correlation": float(correlation.item()),
+        "predicted_sign_agreement": float(agreement.item()),
+    }
 
 
 def compactified_triangulation_degrees(diagonals: Any) -> Any:

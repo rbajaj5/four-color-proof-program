@@ -1,0 +1,11 @@
+{
+  "cuda_used": true,
+  "fixture_count": 33,
+  "wheel_count": 6,
+  "atlas_control_count": 27,
+  "all_wheel_formulas_passed": true,
+  "all_wheel_nonzero_states_are_k3": true,
+  "atlas_graphs_falsifying_universal_nonzero_rule": 25,
+  "new_four_color_proof": false,
+  "odd_wheel_status": "conjecture_with_orbit_proof_sketch"
+}

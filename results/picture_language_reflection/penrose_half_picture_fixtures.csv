@@ -1,0 +1,5 @@
+fixture,boundary_size,evaluation,is_norm_square,nonnegative,role
+tripod_reflection_double,3,6,True,True,positive reflected double
+reversed_tripod_reflection_double,3,6,True,True,positive reflected double
+tripod_mixed_orientation,3,-6,False,False,mixed-gluing obstruction
+two_vertex_channel_reflection_double,4,12,True,True,positive reflected double

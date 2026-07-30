@@ -102,6 +102,15 @@ The component-count function supplies a natural height, but component count
 alone cannot distinguish a 3-colorable component graph from one requiring
 four colors.
 
+The CUDA smoothing-landscape census makes this obstruction explicit. Odd
+wheels show a clean finite-family pattern: through `W14`, every nonzero
+strict maximum has component graph `K3`, and their count is
+`(4^k-1)/3` for `W_(2k+2)`. However, 25 of 27 small 3-connected,
+4-chromatic planar atlas graphs have a nonzero strict maximum whose component
+graph is not 3-colorable. Thus "discard the zero maximum" is not a universal
+certificate. The wheel formula remains a conjecture with a coloring-orbit
+proof sketch, not a Four Color lemma.
+
 ### FC-C3. Positive state-sum decomposition
 
 Rewrite `P(3)`, the Penrose-Kauffman evaluation, as a sum of manifestly
@@ -125,6 +134,26 @@ equivalence or preserve a weighted fractional route selection. The exact
 `58` versus `60` triangle fixture in `src/goemans_conflict_fixture.py`
 falsifies that stronger bridge at the conflict-system level.
 
+The generated special-case dictionary in
+`results/four_color_special_case_dictionary/` now records where Four Color
+is actually load-bearing. Bipartite and generic knot-diagram region cases
+need only two colors; triangle-free planar and Eulerian sphere
+triangulations have three-color mechanisms; non-Eulerian sphere
+triangulations invoke the four-color ceiling; Tait instances admit a
+Klein-four flow reformulation. Any interpretation involving weighted routes
+or resources is separately sent through the exact 58/60 relaxation audit.
+
+The dictionary also includes the algorithmic distinction in Or Zamir's
+*k-Coloring is Faster than Computing the Chromatic Number*
+(arXiv:2607.25973). For an arbitrary planar graph that survives the
+bipartite and structural checks, exact chromatic diagnosis needs only a
+fixed 3-color decision: YES leaves `chi=3` after the lower-bound checks,
+while NO combines with Four Color to give `chi=4`. Zamir proves a randomized
+sub-`2^n` route for every fixed palette and a polynomial-overhead
+decision-to-search reduction. This repository records that theorem as a
+fallback; it does not reimplement the general bootstrap, and it keeps
+weighted path selection outside the theorem's scope.
+
 This side program does not alter FC-C1 through FC-C3 and contributes no new
 proof of the Four Color Theorem.
 
@@ -145,12 +174,14 @@ More successful finite enumerations alone do not count as a better proof.
 ```text
 python scripts/check_four_color_penrose_fixtures.py
 python scripts/check_cubic_edge_smoothing_lifts.py
+py -3.12 scripts/check_penrose_smoothing_landscape_gpu.py
 python -m pytest tests -q
 ```
 
 Outputs are written to `results/four_color_penrose_program/` and
-`results/cubic_edge_smoothing/`. The separate Maxwell runner writes to
-`results/maxwell_knot_fields/`.
+`results/cubic_edge_smoothing/`. The CUDA landscape census writes to
+`results/penrose_smoothing_landscape_gpu/`. The separate Maxwell runner
+writes to `results/maxwell_knot_fields/`.
 
 ## Status
 

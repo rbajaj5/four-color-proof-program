@@ -13,6 +13,6 @@ periodic_resolution: 32
 hurst_values: [0.25, 0.75]
 grid_sizes: [9, 17, 33]
 peak_cuda_memory_bytes: 891904
-elapsed_seconds: 0.566701000003377
+elapsed_seconds: 0.5239948999951594
 continuum_infinite_coloring_constructed: False
 finite_planar_triangulations_certified: True

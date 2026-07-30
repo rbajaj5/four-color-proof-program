@@ -24,7 +24,7 @@
     65
   ],
   "peak_cuda_memory_bytes": 55700992,
-  "elapsed_seconds": 0.5541264000057708,
+  "elapsed_seconds": 0.3725041000143392,
   "continuum_infinite_coloring_constructed": false,
   "finite_planar_triangulations_certified": true
 }

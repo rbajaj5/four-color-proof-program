@@ -14,7 +14,10 @@ from src.fractional_field_four_color import (
     dsatur_coloring,
     estimate_hurst_from_structure_function,
     fractional_gaussian_surfaces,
+    interior_four_spin_correlation,
+    interior_parity_defects,
     mixed_curvature_diagonals,
+    mixed_curvature_neighbor_prediction,
     periodic_closed_window,
     subsample_closed_window,
 )
@@ -87,6 +90,38 @@ def test_checkerboard_is_three_colorable_and_one_flip_requires_four() -> None:
         four_pattern.unsqueeze(0)
     )
     assert torch.any(four_degrees % 2 == 1)
+
+
+def test_interior_degree_parity_is_four_cell_xor() -> None:
+    generator = torch.Generator().manual_seed(413)
+    diagonals = torch.rand((7, 8, 8), generator=generator) > 0.5
+    defects = interior_parity_defects(diagonals)
+    degrees = compactified_triangulation_degrees(diagonals)
+    grid_degrees = degrees[:, :-1].reshape(7, 9, 9)
+    assert torch.equal(defects, grid_degrees[:, 1:-1, 1:-1] % 2 == 1)
+    correlation = interior_four_spin_correlation(diagonals)
+    assert torch.allclose(
+        defects.to(torch.float64).mean(dim=(1, 2)),
+        0.5 * (1.0 - correlation),
+    )
+
+
+def test_spectral_arcsine_prediction_matches_known_cutoff_value() -> None:
+    prediction = mixed_curvature_neighbor_prediction(64, 0.5, 1)
+    assert prediction["neighbor_correlation"] == pytest.approx(
+        -0.1577719553399871,
+        abs=1e-12,
+    )
+    assert prediction["predicted_sign_agreement"] == pytest.approx(
+        0.4495689103909044,
+        abs=1e-12,
+    )
+    rough = mixed_curvature_neighbor_prediction(64, 0.1, 1)
+    smooth = mixed_curvature_neighbor_prediction(64, 0.9, 1)
+    assert (
+        rough["predicted_sign_agreement"]
+        < smooth["predicted_sign_agreement"]
+    )
 
 
 def test_nested_diagonal_transport_detects_mismatch() -> None:

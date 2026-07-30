@@ -1,0 +1,16 @@
+{
+  "cuda_used": true,
+  "samples_total": 20800000,
+  "both_or_neither_winner_count": 0,
+  "families": [
+    "fractional_gaussian",
+    "iid"
+  ],
+  "hurst_values": [
+    0.2,
+    0.5,
+    0.8
+  ],
+  "continuum_fractional_field_claim": false,
+  "new_hex_theorem": false
+}

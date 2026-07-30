@@ -1,0 +1,3 @@
+fixture,resolution,observed,expected,absolute_error
+first_chern_number_CP1,16384,1.0000000015319641,1.0,1.5319641111233295e-09
+distinct_hopf_fiber_linking,2048,1.0000010683286993,1.0,1.0683286992829721e-06

@@ -1,0 +1,5 @@
+fixture,players,states,strict_local_maxima,strict_nash_equilibria,sets_identical
+K4,6,64,2,2,True
+graph_atlas_44,6,64,5,5,True
+graph_atlas_48,7,128,4,4,True
+graph_atlas_51,9,512,4,4,True

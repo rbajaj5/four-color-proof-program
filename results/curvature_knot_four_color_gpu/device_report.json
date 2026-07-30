@@ -1,0 +1,38 @@
+{
+  "python_executable": "C:\\Users\\anaxe\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+  "python_version": "3.12.10",
+  "torch_version": "2.12.0.dev20260408+cu128",
+  "torch_cuda_available": true,
+  "torch_cuda_version": "12.8",
+  "actual_device": "cuda",
+  "gpu_name": "NVIDIA GeForce RTX 5070 Ti Laptop GPU",
+  "cuda_used": true,
+  "dtype": "torch.float64",
+  "samples": 512,
+  "fixtures": [
+    "trefoil_T_2_3",
+    "cinquefoil_T_2_5",
+    "torus_T_3_4"
+  ],
+  "tau_count": 9,
+  "grid_sizes": [
+    9,
+    17,
+    33,
+    65
+  ],
+  "bandwidths": [
+    0.1,
+    0.18
+  ],
+  "channels": [
+    "curvature_density",
+    "signed_turning"
+  ],
+  "map_count": 432,
+  "flux_certificate_count": 24,
+  "peak_cuda_memory_bytes": 85767168,
+  "elapsed_seconds": 1.6725923999911174,
+  "new_four_color_theorem_claimed": false,
+  "physical_flux_identity_claimed": false
+}

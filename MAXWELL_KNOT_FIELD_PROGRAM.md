@@ -397,6 +397,48 @@ python scripts/check_fractional_field_four_color_gpu.py
 Outputs are written to `results/fractional_field_four_color_gpu_smoke/` and
 `results/fractional_field_four_color_gpu/`.
 
+## Curvature dissections of magnetic knots
+
+The curvature-knot branch applies the same finite triangulation to exact
+Bateman magnetic core curves after periodic heat coarse graining. It avoids
+the trivial route of coloring knot-diagram regions, which already admit a
+checkerboard coloring. Instead, integrated 3D bending or signed projected
+turning is deposited into a smooth planar potential. Mixed-curvature signs
+then select diagonals.
+
+Two exact interpretations accompany the computation:
+
+1. Interior odd degree is the XOR of the four surrounding diagonal choices,
+   making it a local `Z2` curvature defect.
+2. Encoding four vertex colors by `Z2 x Z2` makes each edge difference
+   nonzero; the three labels at every dual cubic vertex XOR to zero. This is
+   a conserved nowhere-zero Klein-four graph flow.
+
+The full CUDA pass analyzed 432 maps from three magnetic knots, two
+curvature channels, two kernel widths, nine heat-flow scales, and four grid
+sizes. All 24 representative Klein-flow certificates passed. The fitted
+odd-defect count exponent across 108 fixed configurations had mean `1.188`
+and range `1.061` to `1.363`, compared with exponent one for curve-supported
+defects and two for area-supported defects.
+
+There is a conditional explanation. If the continuous finite-difference
+mixed-curvature field has a regular zero set of uniformly bounded length,
+every parity defect lies in an `O(h)` neighborhood of that set. A tubular
+neighborhood count then gives `O(h^-1)` defects and `O(h)` defect density.
+The experiment supports this picture but does not certify transversality or
+the uniform length bound.
+
+Run:
+
+```text
+python scripts/check_curvature_knot_four_color_gpu.py --smoke
+python scripts/check_curvature_knot_four_color_gpu.py
+```
+
+The Klein labels are combinatorial graph flows, not physical magnetic flux.
+The potential dissection also depends on projection, kernel, grid, and
+compactification.
+
 ## Sources
 
 - K. T. McDonald, *Can the Field Lines of a Permanent Magnet Be Tied in

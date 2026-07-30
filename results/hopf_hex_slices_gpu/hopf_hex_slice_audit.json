@@ -1,0 +1,10 @@
+{
+  "cuda_used": true,
+  "field_slices_total": 600000,
+  "hex_board_evaluations_total": 16200000,
+  "both_or_neither_winner_count": 0,
+  "u1_board_mismatch_count": 0,
+  "hopf_map_u1_max_error": 1.3322676295501878e-15,
+  "imports_tuft_physical_claims": false,
+  "three_dimensional_knot_certificate": false
+}
